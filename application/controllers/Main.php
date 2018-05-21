@@ -12,7 +12,7 @@
     function login($MSGErr = '')
     {
       if(isset($this->session->userdata['USRNAME'])){
-        $this->home();
+        $this->load->view('redirect/home');
         return;
       }
       $header['ArrURL'] = $this->Master_model->getHeaderArr();
@@ -25,7 +25,7 @@
 
     function logout(){
       $this->session->sess_destroy();
-        $this->load->view('login_redirect');
+        $this->load->view('redirect/login');
     }
 
     function home(){
@@ -35,7 +35,6 @@
         return;
       }
       $header['ArrURL'] = $this->Master_model->getHeaderArr();
-      $header['OrgArr'] = $this->Master_model->getPagesByType();
 
       $this->load->view('templates/header', $header);
       $this->load->view('pages/home');
@@ -44,10 +43,12 @@
 
     function checkLoginData(){
       $userName = $this->input->post('userName');
+      if(isset($this->input->post('userPass')))
       $userPass = $this->input->post('userPass');
-      $userType = $this->input->post('userType');
-
-      $res = $this->Master_model->user_login($userName, $userPass, $userType);
+      else {
+        $userPass = '';
+      }
+      $res = $this->Master_model->user_login($userName, $userPass);
       if($res){
         $this->load->view('redirect/home');
       }else {
