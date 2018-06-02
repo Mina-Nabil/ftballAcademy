@@ -11,13 +11,14 @@
 
     public function getAllStudents($key=''){
       if($this->permitApiCall($key)){
-        return json_encode($this->Students_model->getStudents(), JSON_UNESCAPED_UNICODE);
+        echo json_encode($this->Students_model->getStudents(), JSON_UNESCAPED_UNICODE);
       }
+      echo 'eh b2a'; 
     }
 
     public function getStudents($ClassID, $key=''){
       if($this->permitApiCall($key)){
-        return json_encode($this->Students_model->getStudent_byClass($ClassID), JSON_UNESCAPED_UNICODE);
+        echo json_encode($this->Students_model->getStudent_byClass($ClassID), JSON_UNESCAPED_UNICODE);
       }
     }
 
