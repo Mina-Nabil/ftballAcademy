@@ -13,7 +13,7 @@
       if($this->permitApiCall($key)){
         echo json_encode($this->Students_model->getStudents(), JSON_UNESCAPED_UNICODE);
       }
-      echo 'eh b2a'; 
+      
     }
 
     public function getStudents($ClassID, $key=''){
