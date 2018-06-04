@@ -29,8 +29,8 @@
         $temp = array();
         foreach($classes as $class){
           array_push($temp, array(
-            'state' : $class['CLSS_ID'],
-            'name'  : $class['CLSS_NAME']
+            'state' => $class['CLSS_ID'],
+            'name'  => $class['CLSS_NAME']
           ));
         }
 
