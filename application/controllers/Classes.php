@@ -27,7 +27,7 @@
       if($this->permitApiCall($key)){
         $classes = $this->Classes_model->getClasses();
         $temp = array();
-        foreach($class in $classes){
+        foreach($classes as $class){
           array_push($temp, array(
             'state' : $class['CLSS_ID'],
             'name'  : $class['CLSS_NAME']
