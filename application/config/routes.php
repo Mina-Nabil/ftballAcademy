@@ -55,6 +55,9 @@ $route['Api/getStudents'] = 'Students/getAllStudents';
 $route['Api/getStudents/(:num)'] = 'Students/getStudents/$1';
 
 
+//Classes API
+$route['Api/getClasses'] = 'Classes/getAllClasses';
+
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
