@@ -23,6 +23,23 @@
 
     }
 
+    public function getRoutes($key=''){
+      if($this->permitApiCall($key)){
+        $classes = $this->Classes_model->getClasses();
+        $temp = new array();
+        foreach($class in $classes){
+          array_push($temp, new array(
+            'state' : $class['CLSS_ID'],
+            'name'  : $class['CLSS_NAME']
+          ));
+        }
+
+
+        echo json_encode($temp, JSON_UNESCAPED_UNICODE);
+      }
+
+    }
+
 
 
 
