@@ -26,9 +26,9 @@
     public function getRoutes($key=''){
       if($this->permitApiCall($key)){
         $classes = $this->Classes_model->getClasses();
-        $temp = new array();
+        $temp = array();
         foreach($class in $classes){
-          array_push($temp, new array(
+          array_push($temp, array(
             'state' : $class['CLSS_ID'],
             'name'  : $class['CLSS_NAME']
           ));
