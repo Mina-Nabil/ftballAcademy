@@ -35,9 +35,11 @@
 
     public function addClass($key=''){
       if($this->permitApiCall($key)){
-        $className = $this->input->post('CLSS_NAME');
-        $classDesc = $this->input->post('CLSS_DESC');
-        $classYear = $this->input->post('CLSS_YEAR');
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $className = $data['CLSS_NAME'];
+        $classDesc = $data['CLSS_DESC'];
+        $classYear = $data['CLSS_YEAR'];
       }
 
       echo json_encode($this->Classes_model->insertClass($className, $classDesc, $classYear), JSON_UNESCAPED_UNICODE);
