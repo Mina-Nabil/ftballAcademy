@@ -41,7 +41,7 @@
         $classDesc = $data['CLSS_DESC'];
         $classYear = $data['CLSS_YEAR'];
       }
-      if($className !== null) && $classDesc !==null && $classYear!==null)
+      if($className !== null && $classDesc !==null && $classYear!==null)
       echo json_encode($this->Classes_model->insertClass($className, $classDesc, $classYear), JSON_UNESCAPED_UNICODE);
       else
       die("Invalid Arguments");
