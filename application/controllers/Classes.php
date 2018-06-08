@@ -30,19 +30,22 @@
         foreach($classes as $class){
           array_push($temp, array(
             'state' => $class['CLSS_ID'],
-            'name'  => $class['CLSS_NAME']
+            'name'  => 'Class: ' . $class['CLSS_NAME']
           ));
         }
-
-
         echo json_encode($temp, JSON_UNESCAPED_UNICODE);
       }
-
     }
 
+    public function addClass($key=''){
+      if($this->permitApiCall($key)){
+        $className = $this->input->post('CLSS_NAME');
+        $classDesc = $this->input->post('CLSS_DESC');
+        $classYear = $this->input->post('CLSS_YEAR');
+      }
 
-
-
+      echo json_encode($this->Classes_model->insertClass($className, $classDesc, $classYear), JSON_UNESCAPED_UNICODE);
+    }
 
   }
 ?>

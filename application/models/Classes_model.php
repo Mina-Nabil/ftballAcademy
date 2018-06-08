@@ -28,17 +28,20 @@ class Classes_model extends CI_Model{
         }
 
 
-        public function insertClasses($Name, $Desc, $Year){
+        public function insertClass($Name, $Desc, $Year){
             //NN Text ArabicName Name DistrictID
           $strSQL = "INSERT INTO Classes (CLSS_NAME, CLSS_DESC, CLSS_YEAR)
                      VALUES (?, ?, ?)";
 
           $inputs = array($Name, $Desc, $Year);
           $query = $this->db->query($strSQL, $inputs);
-
+          $strSQL = "SELECT CLSS_ID, CLSS_NAME, CLSS_DESC, CLSS_YEAR
+                    FROM Classes WHERE CLSS_ID = LAST_INSERT_ID() ";
+          $query = $this->db->query($strSQL);
+          return $query->result_array()[0];
         }
 
-        public function editClasses($ID, $Name, $Desc, $Year){
+        public function editClass($ID, $Name, $Desc, $Year){
             //NN Text ArabicName Name DistrictID
           $strSQL = "UPDATE Classes
                     SET CLSS_NAME    = ?,

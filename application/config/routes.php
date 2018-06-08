@@ -56,8 +56,9 @@ $route['Api/getStudents/(:num)'] = 'Students/getStudents/$1';
 
 
 //Classes API
-$route['Api/getClasses'] = 'Classes/getClasses';
-$route['Api/getClassesRoutes'] = 'Classes/getRoutes';
+$route['Api/getClasses']        = 'Classes/getClasses';
+$route['Api/getClassesRoutes']  = 'Classes/getRoutes';
+$route['Api/addClass']          = 'Classes/addClass'
 
 
 $route['default_controller'] = 'welcome';
