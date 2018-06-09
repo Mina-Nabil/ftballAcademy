@@ -19,6 +19,13 @@
 
     }
 
+    public function getClass_byID($classID, $key=''){
+      if($this->permitApiCall($key)){
+        echo json_encode($this->Classes_model->getClass_byID($classID), JSON_UNESCAPED_UNICODE);
+      }
+
+    }
+
     public function getRoutes($key=''){
       if($this->permitApiCall($key)){
         $classes = $this->Classes_model->getClasses();
