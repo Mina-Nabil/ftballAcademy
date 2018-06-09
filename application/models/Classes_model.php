@@ -51,6 +51,10 @@ class Classes_model extends CI_Model{
                         `CLSS_ID`    = ?";
           $inputs = array($Name, $Desc, $Year, $ID);
           $query = $this->db->query($strSQL, $inputs);
+          $strSQL = "SELECT CLSS_ID, CLSS_NAME, CLSS_DESC, CLSS_YEAR
+                    FROM Classes WHERE CLSS_ID = LAST_INSERT_ID() ";
+          $query = $this->db->query($strSQL);
+          return $query->result_array()[0];
 
         }
 
