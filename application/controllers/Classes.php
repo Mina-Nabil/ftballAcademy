@@ -55,5 +55,21 @@
 
     }
 
+    public function editClass($key=''){
+      if($this->permitApiCall($key)){
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $classID = $data['CLSS_ID'];
+        $className = $data['CLSS_NAME'];
+        $classDesc = $data['CLSS_DESC'];
+        $classYear = $data['CLSS_YEAR'];
+      }
+      if($classID !==null && $className !== null && $classDesc !==null && $classYear!==null)
+      echo json_encode($this->Classes_model->editClass($classID, $className, $classDesc, $classYear), JSON_UNESCAPED_UNICODE);
+      else
+      die("Invalid Arguments");
+
+    }
+
   }
 ?>
