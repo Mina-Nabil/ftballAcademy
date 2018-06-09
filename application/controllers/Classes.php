@@ -21,7 +21,7 @@
 
     public function getClass_byID($classID, $key=''){
       if($this->permitApiCall($key)){
-        echo json_encode($this->Classes_model->getClass_byID($classID), JSON_UNESCAPED_UNICODE);
+        echo json_encode($this->Classes_model->getClass_byID($classID)[0], JSON_UNESCAPED_UNICODE);
       }
 
     }
