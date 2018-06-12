@@ -67,7 +67,7 @@ class Students_model extends CI_Model{
                       AND   STUD_FAV_POS = POST_ID
                       AND   STUD_ID = LAST_INSERT_ID()";
           $query = $this->db->query($strSQL);
-          return $query->result_array();
+          return $query->result_array()[0];
         }
 
         public function editStudent($ID, $Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length){
