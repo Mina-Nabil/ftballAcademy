@@ -62,6 +62,9 @@ $route['Api/editClass/(:num)']        = 'Classes/editClass/$1';
 $route['Api/getClassesRoutes']  = 'Classes/getRoutes';
 $route['Api/addClass']          = 'Classes/addClass';
 
+//Positions API
+$route['Api/getPositions']        = 'Positions/getPositions';
+
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
