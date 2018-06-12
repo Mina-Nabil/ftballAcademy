@@ -51,7 +51,7 @@ class Students_model extends CI_Model{
         }
 
 
-        public function insertStudents($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length){
+        public function insertStudent($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length){
             //NN Text ArabicName Name DistrictID
           $strSQL = "INSERT INTO Students (STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLASS_ID, STUD_PRNT_TELL, STUD_PRNT_NAME,
                                            STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH)
@@ -62,7 +62,7 @@ class Students_model extends CI_Model{
 
         }
 
-        public function editStudents($ID, $Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length){
+        public function editStudent($ID, $Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length){
             //NN Text ArabicName Name DistrictID
           $strSQL = "UPDATE Students
                     SET STUD_NAME   = ?,
