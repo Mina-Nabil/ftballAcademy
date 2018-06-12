@@ -53,6 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //Students API
 $route['Api/getStudents'] = 'Students/getAllStudents';
 $route['Api/getStudents/(:num)'] = 'Students/getStudents/$1';
+$route['Api/addStudent']          = 'Students/addStudent';
 
 
 //Classes API
