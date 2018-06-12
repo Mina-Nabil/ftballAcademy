@@ -54,8 +54,8 @@ class Students_model extends CI_Model{
         public function insertStudent($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length){
             //NN Text ArabicName Name DistrictID
           $strSQL = "INSERT INTO Students (STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL, STUD_PRNT_NAME,
-                                           STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH)
-                     VALUES               (?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?)";
+                                           STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH, STUD_ACCS_CODE)
+                     VALUES               (?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, null)";
 
           $inputs = array($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length);
           $query = $this->db->query($strSQL, $inputs);
