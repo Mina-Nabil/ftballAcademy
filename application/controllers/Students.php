@@ -35,7 +35,7 @@
         $Weight = $data['STUD_WGHT'];
         $Height = $data['STUD_LGTH'];
         $FavPos = $data['STUD_FAV_POS'];
-        $ClassID = $data['STUD_CLSS_ID'];
+        $ClassID = $data['STUD_CLASS_ID'];
         $ParentTel = $data['STUD_PRNT_TEL'];
         $ParentTel2 = $data['STUD_PRNT_TELL'];
         $ParentName = $data['STUD_PRNT_NAME'];
