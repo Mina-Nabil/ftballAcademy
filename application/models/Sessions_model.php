@@ -11,8 +11,9 @@ class Sessions_model extends CI_Model{
 
         public function getSessions(){
 
-          $strSQL = "SELECT SESS_ID, SESS_STRT_DATE, SESS_DESC, SESS_END_DATE, SESS_USER_ID
-                      FROM Sessions";
+          $strSQL = "SELECT SESS_ID, SESS_STRT_DATE, SESS_DESC, SESS_END_DATE, SESS_USER_ID, USER_UNAME
+                      FROM Sessions, Users
+                      WHERE SESS_USER_ID = USER_ID";
           $query = $this->db->query($strSQL);
           return $query->result_array();
 
@@ -21,7 +22,8 @@ class Sessions_model extends CI_Model{
         public function getSession_byID($ID){
 
           $strSQL = "SELECT SESS_ID, SESS_STRT_DATE, SESS_DESC, SESS_END_DATE, SESS_USER_ID
-                    FROM Sessions WHERE SESS_ID = {$ID}";
+                     FROM Sessions, Users
+                     WHERE SESS_USER_ID = USER_ID AND SESS_ID = {$ID}";
           $query = $this->db->query($strSQL);
           return $query->result_array();
 

@@ -25,6 +25,12 @@
       }
     }
 
+    public function getStudent($StudentID, $key=''){
+      if($this->permitApiCall($key)){
+        echo json_encode($this->Students_model->getStudent_byID($StudentID), JSON_UNESCAPED_UNICODE);
+      }
+    }
+
     public function addStudent($key=''){
       if($this->permitApiCall($key)){
         $data = json_decode(file_get_contents('php://input'), true);
