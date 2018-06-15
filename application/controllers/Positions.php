@@ -19,5 +19,12 @@
 
     }
 
+    public function getPositions($PositionID, $key=''){
+      if($this->permitApiCall($key)){
+        echo json_encode($this->Positions_model->getPosition_byID($PositionID), JSON_UNESCAPED_UNICODE);
+      }
+
+    }
+
   }
 ?>

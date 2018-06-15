@@ -23,7 +23,7 @@ class Positions_model extends CI_Model{
           $strSQL = "SELECT POST_ID, POST_NAME, POST_ABB
                     FROM Positions WHERE POST_ID = {$ID}";
           $query = $this->db->query($strSQL);
-          return $query->result_array();
+          return $query->result_array()[0];
 
         }
 
