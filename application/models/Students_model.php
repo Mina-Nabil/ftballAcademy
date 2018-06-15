@@ -32,7 +32,7 @@ class Students_model extends CI_Model{
                       AND   STUD_FAV_POS = POST_ID
                       AND   STUD_ID = {$ID}";
           $query = $this->db->query($strSQL);
-          return $query->result_array()[0];
+          return $query->result_array();
 
         }
 

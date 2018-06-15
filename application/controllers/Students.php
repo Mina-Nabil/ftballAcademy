@@ -27,7 +27,6 @@
 
     public function getStudent($StudentID, $key=''){
       if($this->permitApiCall($key)){
-        echo $StudentID;
         echo json_encode($this->Students_model->getStudent_byID($StudentID), JSON_UNESCAPED_UNICODE);
       }
     }
