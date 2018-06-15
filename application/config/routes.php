@@ -55,6 +55,7 @@ $route['Api/getStudents'] = 'Students/getAllStudents';
 $route['Api/getStudents/(:num)'] = 'Students/getStudents/$1';
 $route['Api/getStudent/(:num)'] = 'Students/getStudent/$1';
 $route['Api/addStudent']          = 'Students/addStudent';
+$route['Api/editStudent/(:num)'] = 'Students/editStudent/$1';
 
 
 //Classes API

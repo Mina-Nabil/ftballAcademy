@@ -55,6 +55,30 @@
 
     }
 
+    public function editStudent($StudentID, $key=''){
+      if($this->permitApiCall($key)){
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $Name = $data['STUD_NAME'];
+        $BirthD = $data['STUD_BD'];
+        $Tel = $data['STUD_TEL'];
+        $Weight = $data['STUD_WGHT'];
+        $Height = $data['STUD_LGTH'];
+        $FavPos = $data['STUD_FAV_POS'];
+        $ClassID = $data['STUD_CLSS_ID'];
+        $ParentTel = $data['STUD_PRNT_TEL'];
+        $ParentTel2 = $data['STUD_PRNT_TELL'];
+        $ParentName = $data['STUD_PRNT_NAME'];
+        $MentorName = $data['STUD_MNTR_NAME'];
+        $PrevClub  = $data['STUD_PREV_CLUB'];
+      }
+      if($Name !== null && $BirthD !==null && $ParentName!==null && $MentorName!==null && $ParentTel!==null)
+      echo json_encode($this->Students_model->editStudent($StudentID, $Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Height), JSON_UNESCAPED_UNICODE);
+      else
+      die("Invalid Arguments");
+
+    }
+
 
 
   }
