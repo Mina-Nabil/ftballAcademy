@@ -66,6 +66,7 @@ $route['Api/addClass']          = 'Classes/addClass';
 
 //Positions API
 $route['Api/getPositions']        = 'Positions/getPositions';
+$route['Api/getPosition/(:num)']        = 'Positions/getPosition/$1';
 
 
 $route['default_controller'] = 'welcome';
