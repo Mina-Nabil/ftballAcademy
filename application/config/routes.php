@@ -69,6 +69,15 @@ $route['Api/addClass']          = 'Classes/addClass';
 $route['Api/getPositions']        = 'Positions/getPositions';
 $route['Api/getPosition/(:num)']        = 'Positions/getPosition/$1';
 
+//Users API
+$route['Api/getUsers']        = 'Users/getUsers';
+
+//Sessions API
+$route['Api/getAllSessions'] = 'Sessions/getAllSessions';
+$route['Api/getSessions/(:num)'] = 'Sessions/getSessions/$1';
+$route['Api/getSession/(:num)'] = 'Sessions/getSession/$1';
+$route['Api/addSession']          = 'Sessions/addSession';
+$route['Api/editSession/(:num)'] = 'Sessions/editSession/$1';
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';

@@ -21,33 +21,47 @@
 
     public function getSessions($ClassID, $key=''){
       if($this->permitApiCall($key)){
-        echo json_encode($this->Sessions_model->getSession_byClass($ClassID), JSON_UNESCAPED_UNICODE);
+        echo json_encode($this->SessionClass_model->getSessionsByClass($ClassID), JSON_UNESCAPED_UNICODE);
       }
     }
 
-    // public function addSession($key=''){
-    //   if($this->permitApiCall($key)){
-    //     $data = json_decode(file_get_contents('php://input'), true);
-    //
-    //     $Name = $data['SESS_NAME'];
-    //     $BirthD = $data['SESS_BD'];
-    //     $Tel = $data['SESS_TEL'];
-    //     $Weight = $data['SESS_WGHT'];
-    //     $Height = $data['SESS_LGTH'];
-    //     $FavPos = $data['SESS_FAV_POS'];
-    //     $ClassID = $data['SESS_CLSS_ID'];
-    //     $ParentTel = $data['SESS_PRNT_TEL'];
-    //     $ParentTel2 = $data['SESS_PRNT_TELL'];
-    //     $ParentName = $data['SESS_PRNT_NAME'];
-    //     $MentorName = $data['SESS_MNTR_NAME'];
-    //     $PrevClub  = $data['SESS_PREV_CLUB'];
-    //   }
-    //   if($Name !== null && $BirthD !==null && $ParentName!==null && $MentorName!==null && $ParentTel!==null)
-    //   echo json_encode($this->Sessions_model->insertSession($Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Height), JSON_UNESCAPED_UNICODE);
-    //   else
-    //   die("Invalid Arguments");
+    public function getSession($SessID, $key=''){
+      if($this->permitApiCall($key)){
+        echo json_encode($this->Sessions_model->getSession_byID($SessID), JSON_UNESCAPED_UNICODE);
+      }
+    }
 
-    //  }
+    public function addSession($key=''){
+      if($this->permitApiCall($key)){
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $Desc = $data['SESS_DESC'];
+        $StartDate = $data['SESS_STRT_DATE'];
+        $EndDate = $data['SESS_END_DATE'];
+        $UserID = $data['SESS_USER_ID'];
+      }
+      if($Desc !== null && $StartDate !==null && $EndDate!==null && $UserID!==null)
+      echo json_encode($this->Sessions_model->insertSession($StartDate, $Desc, $BirthD, $UserID), JSON_UNESCAPED_UNICODE);
+      else
+      die("Invalid Arguments");
+
+     }
+
+     public function editSession($SessID, $key=''){
+       if($this->permitApiCall($key)){
+         $data = json_decode(file_get_contents('php://input'), true);
+
+         $Desc = $data['SESS_DESC'];
+         $StartDate = $data['SESS_STRT_DATE'];
+         $EndDate = $data['SESS_END_DATE'];
+         $UserID = $data['SESS_USER_ID'];
+       }
+       if($Desc !== null && $StartDate !==null && $EndDate!==null && $UserID!==null)
+       echo json_encode($this->Sessions_model->editSession($SessID, $StartDate, $Desc, $BirthD, $UserID), JSON_UNESCAPED_UNICODE);
+       else
+       die("Invalid Arguments");
+
+      }
 
 
 

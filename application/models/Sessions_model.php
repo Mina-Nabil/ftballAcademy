@@ -25,7 +25,7 @@ class Sessions_model extends CI_Model{
                      FROM Sessions, Users
                      WHERE SESS_USER_ID = USER_ID AND SESS_ID = {$ID}";
           $query = $this->db->query($strSQL);
-          return $query->result_array();
+          return $query->result_array()[0];
 
         }
 
@@ -37,7 +37,11 @@ class Sessions_model extends CI_Model{
 
           $inputs = array($SDate, $Desc, $EDate, $User);
           $query = $this->db->query($strSQL, $inputs);
-
+          $strSQL = "SELECT SESS_ID, SESS_STRT_DATE, SESS_DESC, SESS_END_DATE, SESS_USER_ID
+                     FROM Sessions, Users
+                     WHERE SESS_USER_ID = USER_ID AND SESS_ID = LAST_INSERT_ID()";
+          $query = $this->db->query($strSQL);
+          return $query->result_array()[0];
         }
 
         public function editSessions($ID, $SDate, $Desc, $EDate, $User){
@@ -51,7 +55,11 @@ class Sessions_model extends CI_Model{
                         `SESS_ID`= ?";
           $inputs = array($SDate, $Desc, $EDate, $User);
           $query = $this->db->query($strSQL, $inputs);
-
+          $strSQL = "SELECT SESS_ID, SESS_STRT_DATE, SESS_DESC, SESS_END_DATE, SESS_USER_ID
+                     FROM Sessions, Users
+                     WHERE SESS_USER_ID = USER_ID AND SESS_ID = {$ID}";
+          $query = $this->db->query($strSQL);
+          return $query->result_array()[0];
         }
 
         public function deleteSessions($ID){
