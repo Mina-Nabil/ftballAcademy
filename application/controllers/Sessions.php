@@ -34,7 +34,8 @@
     public function addSession($key=''){
       if($this->permitApiCall($key)){
         $data = json_decode(file_get_contents('php://input'), true);
-
+        echo $data;
+        print_f($data);
         $Desc = $data[0]['SESS_DESC'];
         $StartDate = $data[0]['SESS_STRT_DATE'];
         $EndDate = $data[0]['SESS_END_DATE'];
