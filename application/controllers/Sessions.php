@@ -43,7 +43,7 @@
       }
       if($Desc !== null && $StartDate !==null && $EndDate!==null && $UserID!==null)
       {
-        $NewSession = $this->Sessions_model->insertSession($StartDate, $Desc, $EndDate, $UserID;
+        $NewSession = $this->Sessions_model->insertSession($StartDate, $Desc, $EndDate, $UserID);
         foreach($classesID as $class){
           $this->SessionClass_model->insertSessionClass($NewSession['SESS_ID'], $class);
         }
