@@ -43,11 +43,11 @@
       }
       if($Desc !== null && $StartDate !==null && $EndDate!==null && $UserID!==null)
       {
-        $NewSession = json_encode($this->Sessions_model->insertSession($StartDate, $Desc, $EndDate, $UserID), JSON_UNESCAPED_UNICODE);
+        $NewSession = $this->Sessions_model->insertSession($StartDate, $Desc, $EndDate, $UserID;
         foreach($classesID as $class){
           $this->SessionClass_model->insertSessionClass($NewSession['SESS_ID'], $class);
         }
-        echo $NewSession;
+        echo json_encode($NewSession, JSON_UNESCAPED_UNICODE);
       }
       else
       die("Invalid Arguments");
