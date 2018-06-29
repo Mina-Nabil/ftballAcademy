@@ -35,13 +35,20 @@
       if($this->permitApiCall($key)){
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $Desc = $data['SESS_DESC'];
-        $StartDate = $data['SESS_STRT_DATE'];
-        $EndDate = $data['SESS_END_DATE'];
-        $UserID = $data['SESS_USER_ID'];
+        $Desc = $data[0]['SESS_DESC'];
+        $StartDate = $data[0]['SESS_STRT_DATE'];
+        $EndDate = $data[0]['SESS_END_DATE'];
+        $UserID = $data[0]['SESS_USER_ID'];
+        $classesID = $data['classes'];
       }
       if($Desc !== null && $StartDate !==null && $EndDate!==null && $UserID!==null)
-      echo json_encode($this->Sessions_model->insertSession($StartDate, $Desc, $BirthD, $UserID), JSON_UNESCAPED_UNICODE);
+      {
+        $NewSession = json_encode($this->Sessions_model->insertSession($StartDate, $Desc, $BirthD, $UserID), JSON_UNESCAPED_UNICODE);
+        foreach($class in $classesID){
+          $this->SessionClass_model->insertSessionClass($NewSession['SESS_ID'], $class);
+        }
+        echo $NewSession;
+      }
       else
       die("Invalid Arguments");
 
