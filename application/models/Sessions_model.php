@@ -30,7 +30,7 @@ class Sessions_model extends CI_Model{
         }
 
 
-        public function insertSessions($SDate, $Desc, $EDate, $User){
+        public function insertSession($SDate, $Desc, $EDate, $User){
             //NN Text ArabicSDate SDate DistrictID
           $strSQL = "INSERT INTO Sessions (SESS_STRT_DATE, SESS_DESC, SESS_END_DATE, SESS_USER_ID)
                      VALUES (?, ?, ?, ?)";
