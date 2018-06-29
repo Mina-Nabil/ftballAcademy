@@ -53,20 +53,20 @@ class SessionClass_model extends CI_Model{
           $strSQL = "INSERT INTO session_class (SSCL_SESS_ID, SSCL_CLSS_ID, SSCL_CLSS_COUNT)
                      VALUES (?, ?, (SELECT COUNT(*) FROM students WHERE STUD_CLSS_ID = ?))";
 
-          $inputs = array($ClassID, $SessionID, $ClassID);
+          $inputs = array($SessionID, $ClassID, $ClassID);
           $query = $this->db->query($strSQL, $inputs);
 
         }
 
-        public function editSessionClass($ID, $SessionID, $ClassID){
+        public function editSessionClass($SessionID, $ClassID){
             //NN Text ArabicName Name DistrictID
           $strSQL = "UPDATE session_class
                     SET SSCL_SESS_ID   = ?,
                         SSCL_CLSS_ID    = ?,
                         SSCL_CLSS_COUNT    = (SELECT COUNT(*) FROM students WHERE STUD_CLSS_ID = ?)
                     WHERE
-                        `SSCL_ID`= ?";
-          $inputs = array($SessionID, $ClassID, $ID);
+                        `SSCL_SESS_ID`= ? AND SSCL_CLSS_ID=? ";
+          $inputs = array($SessionID, $ClassID, $SessionID, $ClassID);
           $query = $this->db->query($strSQL, $inputs);
 
         }
