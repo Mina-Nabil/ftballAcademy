@@ -62,9 +62,10 @@ class SessionClass_model extends CI_Model{
             //NN Text ArabicName Name DistrictID
           $strSQL = "UPDATE session_class
                     SET SSCL_SESS_ID   = ?,
-                        SSCL_CLSS_ID    = ?
+                        SSCL_CLSS_ID    = ?,
+                        SSCL_CLSS_COUNT    = (SELECT COUNT(*) FROM students WHERE STUD_CLSS_ID = ?)
                     WHERE
-                        `CLSS_ID`= ?";
+                        `SSCL_ID`= ?";
           $inputs = array($SessionID, $ClassID, $ID);
           $query = $this->db->query($strSQL, $inputs);
 
