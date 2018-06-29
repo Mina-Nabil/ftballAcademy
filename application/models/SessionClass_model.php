@@ -50,8 +50,8 @@ class SessionClass_model extends CI_Model{
 
         public function insertSessionClass($SessionID, $ClassID){
             //NN Text ArabicName Name DistrictID
-          $strSQL = "INSERT INTO SessionClass (SSCL_SESS_ID, SSCL_CLSS_ID, (SELECT COUNT(*) FROM students WHERE STUD_CLASS_ID = ?))
-                     VALUES (?, ?)";
+          $strSQL = "INSERT INTO SessionClass (SSCL_SESS_ID, SSCL_CLSS_ID, SSCL_CLSS_COUNT)
+                     VALUES (?, ?, (SELECT COUNT(*) FROM students WHERE STUD_CLASS_ID = ?))";
 
           $inputs = array($ClassID, $SessionID, $ClassID);
           $query = $this->db->query($strSQL, $inputs);
