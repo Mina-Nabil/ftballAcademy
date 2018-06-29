@@ -43,7 +43,7 @@
       }
       if($Desc !== null && $StartDate !==null && $EndDate!==null && $UserID!==null)
       {
-        $NewSession = json_encode($this->Sessions_model->insertSession($StartDate, $Desc, $BirthD, $UserID), JSON_UNESCAPED_UNICODE);
+        $NewSession = json_encode($this->Sessions_model->insertSession($StartDate, $Desc, $EndDate, $UserID), JSON_UNESCAPED_UNICODE);
         foreach($classesID as $class){
           $this->SessionClass_model->insertSessionClass($NewSession['SESS_ID'], $class);
         }
