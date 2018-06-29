@@ -50,7 +50,7 @@ class SessionClass_model extends CI_Model{
 
         public function insertSessionClass($SessionID, $ClassID){
             //NN Text ArabicName Name DistrictID
-          $strSQL = "INSERT INTO SessionClass (SSCL_SESS_ID, SSCL_CLSS_ID, SSCL_CLSS_COUNT)
+          $strSQL = "INSERT INTO session_class (SSCL_SESS_ID, SSCL_CLSS_ID, SSCL_CLSS_COUNT)
                      VALUES (?, ?, (SELECT COUNT(*) FROM students WHERE STUD_CLASS_ID = ?))";
 
           $inputs = array($ClassID, $SessionID, $ClassID);
@@ -60,7 +60,7 @@ class SessionClass_model extends CI_Model{
 
         public function editSessionClass($ID, $SessionID, $ClassID){
             //NN Text ArabicName Name DistrictID
-          $strSQL = "UPDATE SessionClass
+          $strSQL = "UPDATE session_class
                     SET SSCL_SESS_ID   = ?,
                         SSCL_CLSS_ID    = ?
                     WHERE
