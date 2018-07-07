@@ -11,10 +11,11 @@ class SessionClass_model extends CI_Model{
 
         public function getSessionClass(){
 
-          $strSQL = "SELECT SSCL_SESS_ID, SSCL_CLSS_ID, SSCL_CLSS_COUNT, CLSS_NAME, SESS_DESC, SESS_STRT_DATE
-                      FROM session_class, classes, sessions
+          $strSQL = "SELECT SSCL_SESS_ID, SSCL_CLSS_ID, SSCL_CLSS_COUNT, CLSS_NAME, SESS_DESC, SESS_STRT_DATE, USER_UNAME, TIMEDIFF(SESS_STRT_DATE, SESS_END_DATE) as SESS_DUR
+                      FROM session_class, classes, sessions, users
                       WHERE
                            SSCL_SESS_ID = SESS_ID
+                      AND  SESS_USER_ID = USER_ID
                       AND  SSCL_CLSS_ID = CLSS_ID";
           $query = $this->db->query($strSQL);
           return $query->result_array();
@@ -23,10 +24,11 @@ class SessionClass_model extends CI_Model{
 
         public function getSessionsByClass($ID){
 
-          $strSQL = "SELECT SSCL_SESS_ID, SSCL_CLSS_ID, SSCL_CLSS_COUNT, CLSS_NAME, SESS_DESC, SESS_STRT_DATE
-                      FROM session_class, classes, sessions
+          $strSQL = "SELECT SSCL_SESS_ID, SSCL_CLSS_ID, SSCL_CLSS_COUNT, CLSS_NAME, SESS_DESC, SESS_STRT_DATE, USER_UNAME, TIMEDIFF(SESS_STRT_DATE, SESS_END_DATE) as SESS_DUR
+                      FROM session_class, classes, sessions, users
                       WHERE
                            SSCL_SESS_ID = SESS_ID
+                      AND  SESS_USER_ID = USER_ID
                       AND  SSCL_CLSS_ID = CLSS_ID
                       AND  SSCL_CLSS_ID = {$ID}";
           $query = $this->db->query($strSQL);
@@ -36,10 +38,12 @@ class SessionClass_model extends CI_Model{
 
         public function getClassesBySession($ID){
 
-          $strSQL = "SELECT SSCL_SESS_ID, SSCL_CLSS_ID, SSCL_CLSS_COUNT, CLSS_NAME, SESS_DESC, SESS_STRT_DATE
-                      FROM session_class, classes, sessions
+          $strSQL = "SELECT SSCL_SESS_ID, SSCL_CLSS_ID, SSCL_CLSS_COUNT, CLSS_NAME, SESS_DESC, SESS_STRT_DATE, USER_UNAME, TIMEDIFF(SESS_STRT_DATE, SESS_END_DATE) as SESS_DUR
+
+                      FROM session_class, classes, sessions, users
                       WHERE
                            SSCL_SESS_ID = SESS_ID
+                      AND  SESS_USER_ID = USER_ID
                       AND  SSCL_CLSS_ID = CLSS_ID
                       AND  SSCL_SESS_ID = {$ID}";
           $query = $this->db->query($strSQL);
