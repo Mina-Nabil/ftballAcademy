@@ -31,6 +31,12 @@
       }
     }
 
+    public function getSession_CalendarEvent($Month, $key=''){
+      if($this->permitApiCall($key)){
+        echo json_encode($this->Sessions_model->getSession_limit($Month), JSON_UNESCAPED_UNICODE);
+      }
+    }
+
     public function addSession($key=''){
       if($this->permitApiCall($key)){
         $data = json_decode(file_get_contents('php://input'), true);
