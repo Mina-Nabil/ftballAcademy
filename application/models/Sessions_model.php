@@ -32,9 +32,9 @@ class Sessions_model extends CI_Model{
         public function getSessions_limit($months){
           $strSQL = "SELECT MOD(SESS_ID, 7) as color, SESS_STRT_DATE as start , SESS_DESC as title, SESS_END_DATE as 'end'
                       FROM Sessions
-                      AND SESS_END_DATE < DATE_ADD(NOW(), INTERVAL ? MONTH )
-                      AND SESS_END_DATE > DATE_ADD(NOW(), INTERVAL -? MONTH )";
-          $query = $this->db->query($strSQL, array($months, $months));
+                      AND SESS_END_DATE < DATE_ADD(NOW(), INTERVAL {$months} MONTH )
+                      AND SESS_END_DATE > DATE_ADD(NOW(), INTERVAL -{$months} MONTH )";
+          $query = $this->db->query($strSQL);
           return $query->result_array();
         }
 
