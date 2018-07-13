@@ -30,10 +30,14 @@ class Sessions_model extends CI_Model{
         }
 
         public function getSessions_limit($months){
-          $strSQL = "SELECT MOD(SESS_ID, 7) as color, SESS_STRT_DATE as start , SESS_DESC as title, SESS_END_DATE as 'end'
-                      FROM Sessions
-                      WHERE SESS_END_DATE < DATE_ADD(NOW(), INTERVAL ? MONTH )
-                      AND SESS_END_DATE > DATE_ADD(NOW(), INTERVAL -? MONTH )";
+          $strSQL = "SELECT SESS_ID, MOD(SESS_ID, 7) as color, SESS_STRT_DATE as start , CONCAT(SESS_DESC, 'Teams: ', GROUP_CONCAT(CLSS_NAME SEPARATOR ', ')) as title, SESS_END_DATE as 'end'
+                      FROM Sessions, Classes, SessionClass
+                      WHERE
+                           SSCL_SESS_ID = SESS_ID
+                      AND  SSCL_CLSS_ID = CLSS_ID
+                      AND SESS_END_DATE < DATE_ADD(NOW(), INTERVAL ? MONTH )
+                      AND SESS_END_DATE > DATE_ADD(NOW(), INTERVAL -? MONTH )
+                      GROUP BY SESS_ID";
           $query = $this->db->query($strSQL, array($months, $months));
           return $query->result_array();
         }
