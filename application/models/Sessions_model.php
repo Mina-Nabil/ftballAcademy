@@ -34,7 +34,7 @@ class Sessions_model extends CI_Model{
                       FROM Sessions
                       WHERE SESS_END_DATE < DATE_ADD(NOW(), INTERVAL ? MONTH )
                       AND SESS_END_DATE > DATE_ADD(NOW(), INTERVAL -? MONTH )";
-          $query = $this->db->query($strSQL);
+          $query = $this->db->query($strSQL, array($months, $months));
           return $query->result_array();
         }
 
