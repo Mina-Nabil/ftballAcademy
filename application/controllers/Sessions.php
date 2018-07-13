@@ -33,7 +33,7 @@
 
     public function getSession_CalendarEvent($Month, $key=''){
       if($this->permitApiCall($key)){
-        echo json_encode($this->Sessions_model->getSession_limit($Month), JSON_UNESCAPED_UNICODE);
+        echo json_encode($this->Sessions_model->getSessions_limit($Month), JSON_UNESCAPED_UNICODE);
       }
     }
 
