@@ -30,7 +30,7 @@ class Sessions_model extends CI_Model{
         }
 
         public function getSessions_limit($months){
-          $strSQL = "SELECT SESS_ID, MOD(SESS_ID, 7) as color, SESS_STRT_DATE as start , CONCAT(SESS_DESC, 'Teams: ', GROUP_CONCAT(CLSS_NAME SEPARATOR ', ')) as title, SESS_END_DATE as 'end'
+          $strSQL = "SELECT SESS_ID, MOD(SESS_ID, 7) as color, SESS_STRT_DATE as start , CONCAT(SESS_DESC, '  Teams: ', GROUP_CONCAT(CLSS_NAME SEPARATOR ', '), ' Time: ', DATE_FORMAT(SESS_STRT_DATE, '%d %m %Y %H %i'), ' - ' DATE_FORMAT(SESS_END_DATE, '%H %i')) as title, SESS_END_DATE as 'end'
                       FROM Sessions, Classes, session_class
                       WHERE
                            SSCL_SESS_ID = SESS_ID
