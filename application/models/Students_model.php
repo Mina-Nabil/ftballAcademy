@@ -14,7 +14,7 @@ class Students_model extends CI_Model{
           $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL,
                             STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS,STUD_WGHT, STUD_LGTH, POST_NAME, POST_ABB, STUD_BARCODE, STUD_SINCE
                       FROM Students,  Positions
-                      AND   STUD_FAV_POS = POST_ID ";
+                      WHERE   STUD_FAV_POS = POST_ID ";
           $query = $this->db->query($strSQL);
           return $query->result_array();
 
