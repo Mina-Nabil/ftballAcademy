@@ -39,7 +39,7 @@
 
     public function takeAttendance($StudentID, $key=''){
       if($this->permitApiCall($key)){
-        echo json_encode($this->Attendance_model->$StudentID($Month), JSON_UNESCAPED_UNICODE);
+        echo json_encode($this->Attendance_model->takeAttendance($StudentID), JSON_UNESCAPED_UNICODE);
       }
     }
 
