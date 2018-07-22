@@ -12,7 +12,7 @@ class Students_model extends CI_Model{
         public function getStudents(){
 
           $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL,
-                            STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS,STUD_WGHT, STUD_LGTH, POST_NAME, POST_ABB, STUD_BARCODE, STUD_SINCE
+                            STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS,STUD_WGHT, STUD_LGTH, POST_NAME, POST_ABB, STUD_BARCODE, STUD_SINCE, STUD_ACCS_CODE
                       FROM Students,  Positions
                       WHERE   STUD_FAV_POS = POST_ID ";
           $query = $this->db->query($strSQL);
@@ -68,7 +68,7 @@ class Students_model extends CI_Model{
           return $query->result_array()[0];
         }
 
-        public function editStudent($ID, $Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Barcode, $Weight, $Length, $Since){
+        public function editStudent($ID, $Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Barcode, $Weight, $Length){
             //NN Text ArabicName Name DistrictID
           $strSQL = "UPDATE Students
                     SET STUD_NAME   = ?,
@@ -83,11 +83,10 @@ class Students_model extends CI_Model{
                         STUD_FAV_POS   = ?,
                         STUD_BARCODE     =  ?,
                         STUD_WGHT     = ?,
-                        STUD_LGTH     =  ?,
-                        STUD_SINCE     =  ?
+                        STUD_LGTH     =  ?
                     WHERE
                         `STUD_ID`= ?";
-          $inputs = array($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Barcode, $Weight, $Length, $Since, $ID);
+          $inputs = array($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Barcode, $Weight, $Length, $ID);
           $query = $this->db->query($strSQL, $inputs);
           $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL,
                             STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH,

@@ -24,23 +24,23 @@ class Attendance_model extends CI_Model{
 
         }
 
-        public function takeattendance($StudentID){
+        public function takeattendance($StudentBarcode){
           $Date = date("Y-m-d H:i:s");
 
         }
 
-        private function getCurrentSession($StudentID, $Date){
+        private function getCurrentSession($StudentBarcode, $Date){
 
           $strSQL = "SELECT SESS_ID
                      FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND SSCL_CLSS_ID = CLSS_ID
                      AND STUD_CLSS_ID = CLSS_ID
-                     AND STUD_ID = ?
+                     AND STUD_BARCODE = ?
                      AND SESS_END_DATE > ?
                      AND SESS_STRT_DATE < DATE_ADD(?, 1 hour)";
 
-          $inputs = array($StudentID, $Date, $Date);
+          $inputs = array($StudentBarcode, $Date, $Date);
           $query = $this->db->query($strSQL, $inputs);
           $res = $query->result_array();
           if(count($res) > 1) return array('class' => 'Unavailable');
