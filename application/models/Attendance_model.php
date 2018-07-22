@@ -25,14 +25,15 @@ class Attendance_model extends CI_Model{
         }
 
         public function takeattendance($StudentBarcode){
-          $Date = date("Y-m-d H:i:s", strtotime('+2 hours'));
+          $Date = new DateTime("Y-m-d H:i:s", strtotime('+2 hours'));
           $Session = $this->getCurrentSession($StudentBarcode, $Date);
           if ($Session['res'] == 0) return 'Unavailable';
           else if($Session['res'] == 0) return 0;
           else {
-            $Start = strtotime($Session['class']['SESS_STRT_DATE']);
-            $End = strtotime($Session['class']['SESS_END_DATE']);
-            $Dur = date_diff($End, $Start);
+            $Start = new DateTime($Session['class']['SESS_STRT_DATE']);
+            $End = new DateTime($Session['class']['SESS_END_DATE']);
+            $Dur1 = date_diff($End, $Start);
+            $Dur2 = date_diff($End, $Date);
             if($Date <= $Start) {
               $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date, $Dur);
             }else {
