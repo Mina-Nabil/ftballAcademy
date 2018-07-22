@@ -12,7 +12,7 @@ class Attendance_model extends CI_Model{
 
         public function getAttendance_bySession($ID){
 
-          $strSQL = "SELECT SESS_ID, STUD_ID, CLSS_ID, ATTND, SESS_NAME, CLSS_NAME, CLSS_YEAR, STUD_NAME
+          $strSQL = "SELECT SESS_ID, STUD_ID, CLSS_ID, ATTND, SESS_NAME, CLSS_NAME, CLSS_YEAR, STUD_NAME, ATTND_TIME, ATTND_DUR
                     FROM Attendance, students, classes, sessions
                     WHERE
                         Attendance.CLSS_ID = classes.CLSS_ID
@@ -24,6 +24,30 @@ class Attendance_model extends CI_Model{
 
         }
 
+        public function takeattendance($StudentID){
+          $Date = date("Y-m-d H:i:s");
+
+        }
+
+        private function getCurrentSession($StudentID, $Date){
+
+          $strSQL = "SELECT SESS_ID
+                     FROM sessions, classes, session_class
+                     WHERE SESS_ID = SSCL_SESS_ID
+                     AND SSCL_CLSS_ID = CLSS_ID
+                     AND STUD_CLSS_ID = CLSS_ID
+                     AND STUD_ID = ?
+                     AND SESS_END_DATE > ?
+                     AND SESS_STRT_DATE < DATE_ADD(?, 1 hour)";
+
+          $inputs = array($StudentID, $Date, $Date);
+          $query = $this->db->query($strSQL, $inputs);
+          $res = $query->result_array();
+          if(count($res) > 1) return array('class' => 'Unavailable');
+          else if(count($res) == 1)return array('class' => $res[0]['SESS_ID']);
+          else return array('class' => '0');
+
+        }
 
         public function insertAttendance($SessionID, $StudentID, $ClassID){
             //NN Text ArabicSDate SDate DistrictID
