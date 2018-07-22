@@ -52,7 +52,7 @@ class Attendance_model extends CI_Model{
                      AND STUD_CLSS_ID = CLSS_ID
                      AND STUD_BARCODE = ?
                      AND SESS_END_DATE > ?
-                     AND SESS_STRT_DATE < DATE_ADD(?, 1 hour)";
+                     AND SESS_STRT_DATE < DATE_ADD(?, INTERVAL 1 hour)";
 
           $inputs = array($StudentBarcode, $Date, $Date);
           $query = $this->db->query($strSQL, $inputs);
