@@ -27,8 +27,8 @@ class Attendance_model extends CI_Model{
         public function takeattendance($StudentBarcode){
           $Date = date("Y-m-d H:i:s", strtotime('+2 hours'));
           $Session = $this->getCurrentSession($StudentBarcode, $Date);
-          if (strcmp($Session['class'], 'Unavailable') == 0) return 'Unavailable';
-          else if($Session['class'] == 0) return 0;
+          if ($Session['res'] == 0) return 'Unavailable';
+          else if($Session['res'] == 0) return 0;
           else {
             $Start = strtotime($Session['class']['SESS_STRT_DATE']);
             $End = strtotime($Session['class']['SESS_END_DATE']);
@@ -57,9 +57,9 @@ class Attendance_model extends CI_Model{
           $inputs = array($StudentBarcode);
           $query = $this->db->query($strSQL, $inputs);
           $res = $query->result_array();
-          if(count($res) > 1) return array('class' => 'Unavailable');
-          else if(count($res) == 1)return array('class' => $res[0]);
-          else return array('class' => 0);
+          if(count($res) > 1) return array('res' => 2);
+          else if(count($res) == 1)return array('res' => 1, 'class' => $res[0]);
+          else return array('res' => 0);
 
         }
 
