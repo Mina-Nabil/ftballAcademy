@@ -27,6 +27,12 @@ class Classes_model extends CI_Model{
 
         }
 
+        public function getStudentIDs($ClassIDs){
+          $strSQL = "SELECT STUD_ID FROM students WHERE STUD_CLSS_ID = ?";
+          $query = $this->db->query($strSQL, array($ClassIDs));
+          return $query->result_array();
+        }
+
 
         public function insertClass($Name, $Desc, $Year){
             //NN Text ArabicName Name DistrictID

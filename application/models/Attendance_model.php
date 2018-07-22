@@ -26,12 +26,26 @@ class Attendance_model extends CI_Model{
 
         public function takeattendance($StudentBarcode){
           $Date = date("Y-m-d H:i:s");
+          $Session = $this->getCurrentSession($StudentBarcode, $Date);
+          if (strcmp($Session['class'], 'Unavailable') == 0) return 'Unavailable';
+          else if($Session['class'] == 0) return 0;
+          else {
+            $Start = strtotime($Session['class']['SESS_STRT_DATE']);
+            $End = strtotime($Session['class']['SESS_END_DATE']);
+            $Dur = strtotime(($End - $Start) / 3600);
+            if($Date <= $Start) {
+              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date, $Dur);
+            }else {
+              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date, strtotime($End - $Date));
+            }
+          }
+
 
         }
 
         private function getCurrentSession($StudentBarcode, $Date){
 
-          $strSQL = "SELECT SESS_ID
+          $strSQL = "SELECT SESS_ID, SESS_STRT_DATE, SESS_END_DATE, STUD_ID
                      FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND SSCL_CLSS_ID = CLSS_ID
@@ -44,9 +58,16 @@ class Attendance_model extends CI_Model{
           $query = $this->db->query($strSQL, $inputs);
           $res = $query->result_array();
           if(count($res) > 1) return array('class' => 'Unavailable');
-          else if(count($res) == 1)return array('class' => $res[0]['SESS_ID']);
-          else return array('class' => '0');
+          else if(count($res) == 1)return array('class' => $res[0]);
+          else return array('class' => 0);
 
+        }
+
+        public function createAttendanceList($SessionID, $ClassID){
+          $studentsIDs = $this->Classes_model->getStudentIDs($ClassID);
+          foreach($ID as $studentsIDs){
+            $this->insertAttendance($SessionID, $ID['STUD_ID'], $ClassID);
+          }
         }
 
         public function insertAttendance($SessionID, $StudentID, $ClassID){
@@ -59,14 +80,16 @@ class Attendance_model extends CI_Model{
 
         }
 
-        public function editAttendance($SessionID, $StudentID, $Attended){
+        public function editAttendance($SessionID, $StudentID, $Attended, $Time, $Duration){
             //NN Text ArabicSDate SDate DistrictID
           $strSQL = "UPDATE Attendance
-                    SET ATTND        = ?
+                    SET ATTND        = ?,
+                        ATTND_DUR    = ?,
+                        ATTND_TIME   = ?
                     WHERE
-                        SESS_ID    = ?,
+                        SESS_ID    = ?
                     AND STUD_ID   =  ?";
-          $inputs = array($Attended, $SessionID, $StudentID);
+          $inputs = array($Attended, $Duration, $Time, $SessionID, $StudentID);
           $query = $this->db->query($strSQL, $inputs);
 
         }

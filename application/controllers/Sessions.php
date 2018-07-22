@@ -58,6 +58,7 @@
         $NewSession = $this->Sessions_model->insertSession($StartDate, $Desc, $EndDate, $UserID);
         foreach($classesID as $class){
           $this->SessionClass_model->insertSessionClass($NewSession['SESS_ID'], $class);
+          $this->Attendance_model->createAttendanceList($NewSession['SESS_ID'], $class);
         }
         echo json_encode($NewSession, JSON_UNESCAPED_UNICODE);
       }
