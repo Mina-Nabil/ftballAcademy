@@ -32,12 +32,13 @@ class Attendance_model extends CI_Model{
           else {
             $Start = strtotime($Session['class']['SESS_STRT_DATE']);
             $End = strtotime($Session['class']['SESS_END_DATE']);
-            $Dur = strtotime(($End - $Start) / 3600);
+            $Dur = date_diff($End, $Start);
             if($Date <= $Start) {
               $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date, $Dur);
             }else {
               $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date, strtotime($End - $Date));
             }
+            return 'taken';
           }
 
 
