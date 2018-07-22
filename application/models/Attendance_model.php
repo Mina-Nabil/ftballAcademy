@@ -25,7 +25,7 @@ class Attendance_model extends CI_Model{
         }
 
         public function takeattendance($StudentBarcode){
-          $Date = date("Y-m-d H:i:s");
+          $Date = date("Y-m-d H:i:s", strtotime('+2 hours'));
           $Session = $this->getCurrentSession($StudentBarcode, $Date);
           if (strcmp($Session['class'], 'Unavailable') == 0) return 'Unavailable';
           else if($Session['class'] == 0) return 0;
@@ -51,10 +51,10 @@ class Attendance_model extends CI_Model{
                      AND SSCL_CLSS_ID = CLSS_ID
                      AND STUD_CLSS_ID = CLSS_ID
                      AND STUD_BARCODE = ?
-                     AND SESS_END_DATE > ?
-                     AND SESS_STRT_DATE < DATE_ADD(?, INTERVAL 1 hour)";
+                     AND DATE_ADD(NOW(), INTERVAL 2 hour) < SESS_END_DATE
+                     AND DATE_ADD(NOW(), INTERVAL 2 hour) > DATE_SUB(SESS_STRT_DATE, INTERVAL 1 hour)";
 
-          $inputs = array($StudentBarcode, $Date, $Date);
+          $inputs = array($StudentBarcode);
           $query = $this->db->query($strSQL, $inputs);
           $res = $query->result_array();
           if(count($res) > 1) return array('class' => 'Unavailable');
