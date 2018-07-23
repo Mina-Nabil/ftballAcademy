@@ -214,7 +214,7 @@ class Attendance_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
 
-          $strSQL = "SELECT SUM(ATTND_DUR) as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s') as totalDuration FROM Attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -228,7 +228,7 @@ class Attendance_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
 
-          $strSQL = "SELECT SUM(ATTND_DUR) as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s') as totalDuration FROM Attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -242,7 +242,7 @@ class Attendance_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-21");
 
-          $strSQL = "SELECT SUM(ATTND_DUR) as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s') as totalDuration FROM Attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -258,7 +258,7 @@ class Attendance_model extends CI_Model{
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
           $StartDate->modify('first day of this month');
 
-          $strSQL = "SELECT SUM(ATTND_DUR) as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s') as totalDuration FROM Attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
