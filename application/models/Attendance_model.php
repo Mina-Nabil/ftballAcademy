@@ -26,7 +26,8 @@ class Attendance_model extends CI_Model{
 
         public function takeattendance($StudentBarcode){
           $Date = new DateTime("Y-m-d H:i:s", strtotime('+2 hours'));
-          $Session = $this->getCurrentSession($StudentBarcode, $Date);
+          echo $Date;
+          $Session = $this->getCurrentSession($StudentBarcode);
           if ($Session['res'] == 0) return 'Unavailable';
           else if($Session['res'] == 0) return 0;
           else {
@@ -35,9 +36,9 @@ class Attendance_model extends CI_Model{
             $Dur1 = date_diff($End, $Start);
             $Dur2 = date_diff($End, $Date);
             if($Date <= $Start) {
-              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date, $Dur);
+              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date, $Dur1);
             }else {
-              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date, strtotime($End - $Date));
+              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date, $Dur2);
             }
             return 'taken';
           }
@@ -45,7 +46,7 @@ class Attendance_model extends CI_Model{
 
         }
 
-        private function getCurrentSession($StudentBarcode, $Date){
+        private function getCurrentSession($StudentBarcode){
 
           $strSQL = "SELECT SESS_ID, SESS_STRT_DATE, SESS_END_DATE, STUD_ID
                      FROM sessions, classes, session_class, students
@@ -59,6 +60,7 @@ class Attendance_model extends CI_Model{
           $inputs = array($StudentBarcode);
           $query = $this->db->query($strSQL, $inputs);
           $res = $query->result_array();
+          printf($res);
           if(count($res) > 1) return array('res' => 2);
           else if(count($res) == 1)return array('res' => 1, 'class' => $res[0]);
           else return array('res' => 0);
