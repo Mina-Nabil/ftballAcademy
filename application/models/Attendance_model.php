@@ -78,7 +78,7 @@ class Attendance_model extends CI_Model{
 
         public function getAttendanceChart($StudentID, $Month){
           $return = array();
-          $return['Duration_A'] = $this->getTotalAttendedHours($StudentID, $Month);
+          $return['Duration_A'] = strtotime($this->getTotalAttendedHours($StudentID, $Month));
           $return['Duration_T'] = $this->getTotalAvailableHours($StudentID, $Month);
           $Week1_A = null;
           $Week1_T = null;
