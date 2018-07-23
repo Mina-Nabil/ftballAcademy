@@ -192,7 +192,8 @@ class Attendance_model extends CI_Model{
           $ThisYear = date("Y");
           $StartDate = new DateTime("{$ThisYear}-{$Month}-22");
 
-          $EndDate = new DateTime("{$ThisYear}-{$Month+1}-01");
+          $NextMonth = $Month+1;
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
           $strSQL = "SELECT TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s') as totalDuration
                      FROM sessions, classes, students, session_class
