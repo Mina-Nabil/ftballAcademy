@@ -51,7 +51,7 @@ class Attendance_model extends CI_Model{
 
           $strSQL = "SELECT sessions.SESS_ID, SESS_STRT_DATE, SESS_END_DATE, students.STUD_ID
                      FROM sessions, classes, session_class, students, Attendance
-                     WHERE SESS_ID = SSCL_SESS_ID
+                     WHERE sessions.SESS_ID = SSCL_SESS_ID
                      AND SSCL_CLSS_ID = CLSS_ID
                      AND STUD_CLSS_ID = CLSS_ID
                      AND students.STUD_ID = Attendance.STUD_ID
