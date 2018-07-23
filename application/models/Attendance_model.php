@@ -35,9 +35,9 @@ class Attendance_model extends CI_Model{
             $Dur1 = date_diff($End, $Start);
             $Dur2 = date_diff($End, $Date);
             if($Date <= $Start) {
-              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date, $Dur1);
+              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s');, $Dur1);
             }else {
-              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date, $Dur2);
+              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s');, $Dur2);
             }
             return 'taken';
           }
@@ -59,7 +59,6 @@ class Attendance_model extends CI_Model{
           $inputs = array($StudentBarcode);
           $query = $this->db->query($strSQL, $inputs);
           $res = $query->result_array();
-          printf($res);
           if(count($res) > 1) return array('res' => 2);
           else if(count($res) == 1)return array('res' => 1, 'class' => $res[0]);
           else return array('res' => 0);
