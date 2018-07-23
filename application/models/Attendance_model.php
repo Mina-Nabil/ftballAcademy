@@ -50,10 +50,12 @@ class Attendance_model extends CI_Model{
         private function getCurrentSession($StudentBarcode){
 
           $strSQL = "SELECT SESS_ID, SESS_STRT_DATE, SESS_END_DATE, STUD_ID
-                     FROM sessions, classes, session_class, students
+                     FROM sessions, classes, session_class, students, Attendance
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND SSCL_CLSS_ID = CLSS_ID
                      AND STUD_CLSS_ID = CLSS_ID
+                     AND STUD_ID = Attendance.STUD_ID
+                     AND SESS_ID = Attendance.SESS_ID
                      AND STUD_BARCODE = ?
                      AND DATE_ADD(NOW(), INTERVAL 2 hour) < SESS_END_DATE
                      AND DATE_ADD(NOW(), INTERVAL 2 hour) > DATE_SUB(SESS_STRT_DATE, INTERVAL 1 hour)
