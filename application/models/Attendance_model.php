@@ -78,7 +78,7 @@ class Attendance_model extends CI_Model{
 
         public function getAttendanceChart($StudentID, $Month){
           $return = array();
-          $return['Duration_A'] = date_format($this->getTotalAttendedHours($StudentID, $Month),"H:i:s");
+          $return['Duration_A'] = $this->getTotalAttendedHours($StudentID, $Month);
           $return['Duration_T'] = $this->getTotalAvailableHours($StudentID, $Month);
           $Week1_A = null;
           $Week1_T = null;
@@ -102,7 +102,7 @@ class Attendance_model extends CI_Model{
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-10");
           $EndDate->modify('first day of this month');
 
-          $strSQL = "SELECT SUM(ATTND_DUR) as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s') as totalDuration FROM Attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -119,11 +119,11 @@ class Attendance_model extends CI_Model{
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-10");
           $EndDate->modify('first day of this month');
 
-          $strSQL = "SELECT SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)) as totalDuration
+          $strSQL = "SELECT TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s') as totalDuration
                      FROM sessions, classes, students, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
-                     AND STUD_CLSS_ID = STUD_ID
+                     AND STUD_CLSS_ID = CLSS_ID
                      AND STUD_ID = ?
                      AND SESS_STRT_DATE < ?
                      AND SESS_STRT_DATE > ?";
