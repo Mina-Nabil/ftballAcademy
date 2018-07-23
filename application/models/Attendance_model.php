@@ -89,8 +89,8 @@ class Attendance_model extends CI_Model{
           $Week4_A = $this->getTotalAttendedHoursW4($StudentID, $Month);
           $Week4_T = $this->getTotalAvailableHoursW4($StudentID, $Month);
 
-          $return['Attended'] = new array ($Week1_A, $Week2_A, $Week3_A, $Week4_A);
-          $return['Available'] = new array ($Week1_T, $Week2_T, $Week3_T, $Week4_T);
+          $return['Attended'] = array ($Week1_A, $Week2_A, $Week3_A, $Week4_A);
+          $return['Available'] = array ($Week1_T, $Week2_T, $Week3_T, $Week4_T);
 
           return $return;
 
