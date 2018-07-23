@@ -49,7 +49,7 @@ class Attendance_model extends CI_Model{
 
         private function getCurrentSession($StudentBarcode){
 
-          $strSQL = "SELECT SESS_ID, SESS_STRT_DATE, SESS_END_DATE, STUD_ID
+          $strSQL = "SELECT sessions.SESS_ID, SESS_STRT_DATE, SESS_END_DATE, students.STUD_ID
                      FROM sessions, classes, session_class, students, Attendance
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND SSCL_CLSS_ID = CLSS_ID
