@@ -26,7 +26,6 @@ class Attendance_model extends CI_Model{
 
         public function takeattendance($StudentBarcode){
           $Date = new DateTime(null, new DateTimeZone('Africa/Cairo'));
-          echo $Date;
           $Session = $this->getCurrentSession($StudentBarcode);
           if ($Session['res'] == 0) return 'Unavailable';
           else if($Session['res'] == 0) return 0;
