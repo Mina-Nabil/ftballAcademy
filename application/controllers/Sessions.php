@@ -43,6 +43,12 @@
       }
     }
 
+    public function getChart($StudentID, $Month){
+      if($this->permitApiCall($key)){
+        echo json_encode($this->Attendance_model->getAttendanceChart($StudentID, $Month), JSON_UNESCAPED_UNICODE);
+      }
+    }
+
     public function addSession($key=''){
       if($this->permitApiCall($key)){
         $data = json_decode(file_get_contents('php://input'), true);

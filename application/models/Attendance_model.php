@@ -35,7 +35,7 @@ class Attendance_model extends CI_Model{
             $Dur1 = date_diff($End, $Start);
             $Dur2 = date_diff($End, $Date);
             if($Date <= $Start) {
-        
+
               $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur1->format('%H:%i:%s'));
             }else {
               $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur2->format('%H:%i:%s'));
@@ -74,6 +74,76 @@ class Attendance_model extends CI_Model{
           foreach($studentsIDs as $ID){
             $this->insertAttendance($SessionID, $ID['STUD_ID'], $ClassID);
           }
+        }
+
+        public function getAttendanceChart($StudentID, $Month){
+          $return = array();
+          $return['Duration_A'] = $this->getTotalAttendedHours($StudentID, $Month);
+          $return['Duration_A'] = $this->getTotalAvailableHours($StudentID, $Month);
+          $Week1_A = null;
+          $Week1_T = null;
+          $Week2_A = null;
+          $Week2_T = null;
+          $Week3_A = null;
+          $Week3_T = null;
+          $Week4_A = null;
+          $Week4_T = null;
+
+          return $return;
+
+        }
+
+        private function getTotalAttendedHours($StudentID, $Month){
+          $ThisYear = date("Y");
+          $StartDate = new DateTime("{$ThisYear}-{$Month}-10");
+          $StartDate->modify('first day of this month');
+
+          $NextMonth = $Month + 1;
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-10");
+          $EndDate->modify('first day of this month');
+
+          $strSQL = "SELECT SUM(ATTND_DUR) as totalDuration FROM Attendance
+                     WHERE STUD_ID = ?
+                     AND ATTND_TIME < ?
+                     AND ATTND_TIME > ?";
+          $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
+          return $query->result_array()[0]['totalDuration'];
+        }
+
+        private function getTotalAvailableHours($StudentID, $Month){
+          $ThisYear = date("Y");
+          $StartDate = new DateTime("{$ThisYear}-{$Month}-10");
+          $StartDate->modify('first day of this month');
+
+          $NextMonth = $Month + 1;
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-10");
+          $EndDate->modify('first day of this month');
+
+          $strSQL = "SELECT SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)) as totalDuration
+                     FROM sessions, classes, students, session_class
+                     WHERE SESS_ID = SSCL_SESS_ID
+                     AND CLSS_ID = SSCL_CLSS_ID
+                     AND STUD_CLSS_ID = STUD_ID
+                     AND STUD_ID = ?
+                     AND SESS_STRT_DATE < ?
+                     AND SESS_STRT_DATE > ?";
+          $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
+          return $query->result_array()[0]['totalDuration'];
+        }
+
+        private function getTotalAttendedHoursW1($StudentID, $Month){
+          $ThisYear = date("Y");
+          $StartDate = new DateTime("{$ThisYear}-{$Month}-01");
+          $StartDate->modify('first day of this month');
+
+          $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
+
+          $strSQL = "SELECT SUM(ATTND_DUR) as totalDuration FROM Attendance
+                     WHERE STUD_ID = ?
+                     AND ATTND_TIME < ?
+                     AND ATTND_TIME > ?";
+          $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
+          return $query->result_array()[0]['totalDuration'];
         }
 
         public function insertAttendance($SessionID, $StudentID, $ClassID){
