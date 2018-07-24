@@ -43,9 +43,9 @@
       }
     }
 
-    public function getChart($StudentID, $Month, $key=''){
+    public function getChart($StudentID, $Month, $Year, $key=''){
       if($this->permitApiCall($key)){
-        echo json_encode($this->Attendance_model->getAttendanceChart($StudentID, $Month), JSON_UNESCAPED_UNICODE);
+        echo json_encode($this->Attendance_model->getAttendanceChart($StudentID, $Month, $Year), JSON_UNESCAPED_UNICODE);
       }
     }
 

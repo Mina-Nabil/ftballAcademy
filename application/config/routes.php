@@ -73,7 +73,7 @@ $route['Api/getPosition/(:num)']        = 'Positions/getPosition/$1';
 $route['Api/getUsers']        = 'Users/getUsers';
 
 //charts
-$route['Api/getChart/(:num)/(:num)'] = 'Sessions/getChart/$1/$2';
+$route['Api/getChart/(:num)/(:num)/(:num)'] = 'Sessions/getChart/$1/$2/$3';
 
 //Sessions API
 $route['Api/getAllSessions'] = 'Sessions/getAllSessions';

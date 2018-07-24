@@ -76,18 +76,18 @@ class Attendance_model extends CI_Model{
           }
         }
 
-        public function getAttendanceChart($StudentID, $Month){
+        public function getAttendanceChart($StudentID, $Month, $Year){
           $return = array();
-          $return['Duration_A'] = $this->getTotalAttendedHours($StudentID, $Month);
-          $return['Duration_T'] = $this->getTotalAvailableHours($StudentID, $Month);
-          $Week1_A = $this->getTotalAttendedHoursW1($StudentID, $Month);
-          $Week1_T = $this->getTotalAvailableHoursW1($StudentID, $Month);
-          $Week2_A = $this->getTotalAttendedHoursW2($StudentID, $Month);
-          $Week2_T = $this->getTotalAvailableHoursW2($StudentID, $Month);
-          $Week3_A = $this->getTotalAttendedHoursW3($StudentID, $Month);
-          $Week3_T = $this->getTotalAvailableHoursW3($StudentID, $Month);
-          $Week4_A = $this->getTotalAttendedHoursW4($StudentID, $Month);
-          $Week4_T = $this->getTotalAvailableHoursW4($StudentID, $Month);
+          $return['Duration_A'] = $this->getTotalAttendedHours($StudentID, $Month, $Year);
+          $return['Duration_T'] = $this->getTotalAvailableHours($StudentID, $Month, $Year);
+          $Week1_A = $this->getTotalAttendedHoursW1($StudentID, $Month, $Year);
+          $Week1_T = $this->getTotalAvailableHoursW1($StudentID, $Month, $Year);
+          $Week2_A = $this->getTotalAttendedHoursW2($StudentID, $Month, $Year);
+          $Week2_T = $this->getTotalAvailableHoursW2($StudentID, $Month, $Year);
+          $Week3_A = $this->getTotalAttendedHoursW3($StudentID, $Month, $Year);
+          $Week3_T = $this->getTotalAvailableHoursW3($StudentID, $Month, $Year);
+          $Week4_A = $this->getTotalAttendedHoursW4($StudentID, $Month, $Year);
+          $Week4_T = $this->getTotalAvailableHoursW4($StudentID, $Month, $Year);
 
           $return['Attended'] = array ($Week1_A, $Week2_A, $Week3_A, $Week4_A);
           $return['Available'] = array ($Week1_T, $Week2_T, $Week3_T, $Week4_T);
@@ -96,8 +96,8 @@ class Attendance_model extends CI_Model{
 
         }
 
-        private function getTotalAttendedHours($StudentID, $Month){
-          $ThisYear = date("Y");
+        private function getTotalAttendedHours($StudentID, $Month, $Year){
+          $ThisYear = $Year;
           $StartDate = new DateTime("{$ThisYear}-{$Month}-10");
           $StartDate->modify('first day of this month');
 
@@ -113,8 +113,8 @@ class Attendance_model extends CI_Model{
           return $query->result_array()[0]['totalDuration'];
         }
 
-        private function getTotalAvailableHours($StudentID, $Month){
-          $ThisYear = date("Y");
+        private function getTotalAvailableHours($StudentID, $Month, $Year){
+          $ThisYear = $Year;
           $StartDate = new DateTime("{$ThisYear}-{$Month}-10");
           $StartDate->modify('first day of this month');
 
@@ -134,8 +134,8 @@ class Attendance_model extends CI_Model{
           return $query->result_array()[0]['totalDuration'];
         }
 
-        private function getTotalAvailableHoursW1($StudentID, $Month){
-          $ThisYear = date("Y");
+        private function getTotalAvailableHoursW1($StudentID, $Month, $Year){
+          $ThisYear = $Year;
           $StartDate = new DateTime("{$ThisYear}-{$Month}-01");
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
@@ -152,8 +152,8 @@ class Attendance_model extends CI_Model{
           return $query->result_array()[0]['totalDuration'];
         }
 
-        private function getTotalAvailableHoursW2($StudentID, $Month){
-          $ThisYear = date("Y");
+        private function getTotalAvailableHoursW2($StudentID, $Month, $Year){
+          $ThisYear = $Year;
           $StartDate = new DateTime("{$ThisYear}-{$Month}-08");
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
@@ -170,8 +170,8 @@ class Attendance_model extends CI_Model{
           return $query->result_array()[0]['totalDuration'];
         }
 
-        private function getTotalAvailableHoursW3($StudentID, $Month){
-          $ThisYear = date("Y");
+        private function getTotalAvailableHoursW3($StudentID, $Month, $Year){
+          $ThisYear = $Year;
           $StartDate = new DateTime("{$ThisYear}-{$Month}-15");
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-21");
@@ -188,8 +188,8 @@ class Attendance_model extends CI_Model{
           return $query->result_array()[0]['totalDuration'];
         }
 
-        private function getTotalAvailableHoursW4($StudentID, $Month){
-          $ThisYear = date("Y");
+        private function getTotalAvailableHoursW4($StudentID, $Month, $Year){
+          $ThisYear = $Year;
           $StartDate = new DateTime("{$ThisYear}-{$Month}-22");
 
           $NextMonth = $Month+1;
@@ -207,8 +207,8 @@ class Attendance_model extends CI_Model{
           return $query->result_array()[0]['totalDuration'];
         }
 
-        private function getTotalAttendedHoursW1($StudentID, $Month){
-          $ThisYear = date("Y");
+        private function getTotalAttendedHoursW1($StudentID, $Month, $Year){
+          $ThisYear = $Year;
           $StartDate = new DateTime("{$ThisYear}-{$Month}-01");
           $StartDate->modify('first day of this month');
 
@@ -222,8 +222,8 @@ class Attendance_model extends CI_Model{
           return $query->result_array()[0]['totalDuration'];
         }
 
-        private function getTotalAttendedHoursW2($StudentID, $Month){
-          $ThisYear = date("Y");
+        private function getTotalAttendedHoursW2($StudentID, $Month, $Year){
+          $ThisYear = $Year;
           $StartDate = new DateTime("{$ThisYear}-{$Month}-08");
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
@@ -236,8 +236,8 @@ class Attendance_model extends CI_Model{
           return $query->result_array()[0]['totalDuration'];
         }
 
-        private function getTotalAttendedHoursW3($StudentID, $Month){
-          $ThisYear = date("Y");
+        private function getTotalAttendedHoursW3($StudentID, $Month, $Year){
+          $ThisYear = $Year;
           $StartDate = new DateTime("{$ThisYear}-{$Month}-15");
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-21");
@@ -250,8 +250,8 @@ class Attendance_model extends CI_Model{
           return $query->result_array()[0]['totalDuration'];
         }
 
-        private function getTotalAttendedHoursW4($StudentID, $Month){
-          $ThisYear = date("Y");
+        private function getTotalAttendedHoursW4($StudentID, $Month, $Year){
+          $ThisYear = $Year;
           $StartDate = new DateTime("{$ThisYear}-{$Month}-22");
 
           $NextMonth = $Month + 1;
