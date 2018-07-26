@@ -258,10 +258,6 @@ class Attendance_model extends CI_Model{
                      AND ATTND_TIME > ?";
 
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
-          echo '<pre>';
-          print_r($this->db->last_query());
-          print_r($query->result_array());
-          echo '</pre>';
           return $query->result_array()[0]['totalDuration'];
         }
 
