@@ -91,13 +91,6 @@ class Attendance_model extends CI_Model{
 
           $return['Attended'] = array ($Week1_A, $Week2_A, $Week3_A, $Week4_A);
           $return['Available'] = array ($Week1_T, $Week2_T, $Week3_T, $Week4_T);
-          echo '<pre>';
-          print_r($return);
-          var_dump($Week1_A);
-          var_dump($Week2_A);
-          var_dump($Week3_A);
-          var_dump($Week4_A);
-          echo '</pre>';
           return $return;
 
         }
@@ -268,7 +261,15 @@ class Attendance_model extends CI_Model{
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
+
+         echo '<pre>';
+         print_r($strSQL);
+         echo '</pre>';
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
+          echo '<pre>';
+          print_r($query);
+          print_r($query->result_array());
+          echo '</pre>';
           return $query->result_array()[0]['totalDuration'];
         }
 
