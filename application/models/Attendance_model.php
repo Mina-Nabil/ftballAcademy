@@ -97,12 +97,10 @@ class Attendance_model extends CI_Model{
 
         private function getTotalAttendedHours($StudentID, $Month, $Year){
           $ThisYear = $Year;
-          $StartDate = new DateTime("{$ThisYear}-{$Month}-10");
-          $StartDate->modify('first day of this month');
+          $StartDate = new DateTime("{$ThisYear}-{$Month}-01");
 
           $NextMonth = $Month + 1;
-          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-10");
-          $EndDate->modify('first day of this month');
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
           $strSQL = "SELECT TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s') as totalDuration FROM Attendance
                      WHERE STUD_ID = ?
@@ -114,12 +112,11 @@ class Attendance_model extends CI_Model{
 
         private function getTotalAvailableHours($StudentID, $Month, $Year){
           $ThisYear = $Year;
-          $StartDate = new DateTime("{$ThisYear}-{$Month}-10");
-          $StartDate->modify('first day of this month');
+          $StartDate = new DateTime("{$ThisYear}-{$Month}-01");
 
           $NextMonth = $Month + 1;
-          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-10");
-          $EndDate->modify('first day of this month');
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
+
           //Return number of minutes
           $strSQL = "SELECT TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s') as totalDuration
                      FROM sessions, classes, students, session_class
@@ -209,7 +206,6 @@ class Attendance_model extends CI_Model{
         private function getTotalAttendedHoursW1($StudentID, $Month, $Year){
           $ThisYear = $Year;
           $StartDate = new DateTime("{$ThisYear}-{$Month}-01");
-          $StartDate->modify('first day of this month');
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
 
@@ -255,7 +251,6 @@ class Attendance_model extends CI_Model{
 
           $NextMonth = $Month + 1;
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
-          $StartDate->modify('first day of this month');
 
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
                      WHERE STUD_ID = ?
