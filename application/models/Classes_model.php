@@ -60,7 +60,7 @@ class Classes_model extends CI_Model{
           $NextMonth = $Month + 1;
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
-          $strSQL = "SELECT TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s') as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s') as totalDuration FROM Attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -77,10 +77,9 @@ class Classes_model extends CI_Model{
 
           //Return number of minutes
           $strSQL = "SELECT TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s') as totalDuration
-                     FROM sessions, classes, students, session_class
+                     FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
-                     AND STUD_CLSS_ID = CLSS_ID
                      AND CLSS_ID = ?
                      AND SESS_STRT_DATE < ?
                      AND SESS_STRT_DATE > ?";
@@ -95,10 +94,9 @@ class Classes_model extends CI_Model{
           $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
 
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
-                     FROM sessions, classes, students, session_class
+                     FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
-                     AND STUD_CLSS_ID = CLSS_ID
                      AND CLSS_ID = ?
                      AND SESS_STRT_DATE < ?
                      AND SESS_STRT_DATE > ?";
@@ -113,10 +111,9 @@ class Classes_model extends CI_Model{
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
 
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
-                     FROM sessions, classes, students, session_class
+                     FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
-                     AND STUD_CLSS_ID = CLSS_ID
                      AND CLSS_ID = ?
                      AND SESS_STRT_DATE < ?
                      AND SESS_STRT_DATE > ?";
@@ -131,10 +128,9 @@ class Classes_model extends CI_Model{
           $EndDate = new DateTime("{$ThisYear}-{$Month}-21");
 
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
-                     FROM sessions, classes, students, session_class
+                     FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
-                     AND STUD_CLSS_ID = CLSS_ID
                      AND CLSS_ID = ?
                      AND SESS_STRT_DATE < ?
                      AND SESS_STRT_DATE > ?";
@@ -150,10 +146,9 @@ class Classes_model extends CI_Model{
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
-                     FROM sessions, classes, students, session_class
+                     FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
-                     AND STUD_CLSS_ID = CLSS_ID
                      AND CLSS_ID = ?
                      AND SESS_STRT_DATE < ?
                      AND SESS_STRT_DATE > ?";
@@ -167,7 +162,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -181,7 +176,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -195,7 +190,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-21");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -210,7 +205,7 @@ class Classes_model extends CI_Model{
           $NextMonth = $Month + 1;
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
