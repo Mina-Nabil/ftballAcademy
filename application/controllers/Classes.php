@@ -21,7 +21,7 @@
 
     public function getClassChart($ClassID, $Month, $Year, $key=''){
       if($this->permitApiCall($key)){
-        echo json_encode($this->Classes_model->getAttendanceChart($Class, $Month, $Year), JSON_UNESCAPED_UNICODE);
+        echo json_encode($this->Classes_model->getAttendanceChart($ClassID, $Month, $Year), JSON_UNESCAPED_UNICODE);
       }
     }
 
