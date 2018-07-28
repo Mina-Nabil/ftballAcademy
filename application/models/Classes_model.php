@@ -65,7 +65,9 @@ class Classes_model extends CI_Model{
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
-          return $query->result_array()[0]['totalDuration'];
+          $res = $query->result_array()[0]['totalDuration'];
+          if(is_null($res)) $res = '00:00:00';
+          return $res;
         }
 
         private function getTotalAvailableHours($ClassID, $Month, $Year){
@@ -105,9 +107,7 @@ class Classes_model extends CI_Model{
                      AND SESS_STRT_DATE > ?";
 
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
-          $res = $query->result_array()[0]['totalDuration'];
-          if(is_null($res)) $res = '00:00:00';
-          return $res;
+          return $query->result_array()[0]['totalDuration'];
         }
 
         private function getTotalAvailableHoursW2($ClassID, $Month, $Year){
