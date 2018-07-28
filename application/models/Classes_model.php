@@ -82,8 +82,8 @@ class Classes_model extends CI_Model{
                      AND CLSS_ID = SSCL_CLSS_ID
                      AND CLSS_ID = ?
                      AND SESS_STRT_DATE < ?
-                     AND SESS_STRT_DATE > ?
-                     GROUP BY CLSS_ID";
+                     AND SESS_STRT_DATE > ?";
+
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -100,8 +100,8 @@ class Classes_model extends CI_Model{
                      AND CLSS_ID = SSCL_CLSS_ID
                      AND CLSS_ID = ?
                      AND SESS_STRT_DATE < ?
-                     AND SESS_STRT_DATE > ?
-                     GROUP BY CLSS_ID";
+                     AND SESS_STRT_DATE > ?";
+
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -118,8 +118,8 @@ class Classes_model extends CI_Model{
                      AND CLSS_ID = SSCL_CLSS_ID
                      AND CLSS_ID = ?
                      AND SESS_STRT_DATE < ?
-                     AND SESS_STRT_DATE > ?
-                     GROUP BY CLSS_ID";
+                     AND SESS_STRT_DATE > ?";
+
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -136,8 +136,8 @@ class Classes_model extends CI_Model{
                      AND CLSS_ID = SSCL_CLSS_ID
                      AND CLSS_ID = ?
                      AND SESS_STRT_DATE < ?
-                     AND SESS_STRT_DATE > ?
-                     GROUP BY CLSS_ID";
+                     AND SESS_STRT_DATE > ?";
+
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -155,8 +155,8 @@ class Classes_model extends CI_Model{
                      AND CLSS_ID = SSCL_CLSS_ID
                      AND CLSS_ID = ?
                      AND SESS_STRT_DATE < ?
-                     AND SESS_STRT_DATE > ?
-                     GROUP BY CLSS_ID";
+                     AND SESS_STRT_DATE > ?";
+                     
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
