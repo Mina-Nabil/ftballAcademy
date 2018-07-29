@@ -19,7 +19,7 @@ class Users_model extends CI_Model{
         }
 
         public function login($Name, $Pass){
-          $strSQL = "SELECT USER_ID as logged FROM Users
+          $strSQL = "SELECT USER_ID FROM Users
                      WHERE USER_UNAME = ?
                      AND   USER_PASS  = ?";
           $query = $this->db->query($strSQL, array($Name, $Pass));
