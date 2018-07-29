@@ -23,6 +23,7 @@
       $tokenData = array();
       $tokenData['id'] = 1; //TODO: Replace with data for token
       $output['token'] = AUTHORIZATION::generateToken($tokenData);
+      echo json_encode($output, JSON_UNESCAPED_UNICODE);
     }
 
   }
