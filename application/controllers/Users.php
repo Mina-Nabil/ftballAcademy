@@ -19,5 +19,11 @@
 
     }
 
+    public function authenticate(){
+      $tokenData = array();
+      $tokenData['id'] = 1; //TODO: Replace with data for token
+      $output['token'] = AUTHORIZATION::generateToken($tokenData);
+    }
+
   }
 ?>
