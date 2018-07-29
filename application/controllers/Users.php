@@ -20,10 +20,25 @@
     }
 
     public function authenticate(){
+
+      $data = json_decode(file_get_contents('php://input'), true);
+
+      $Name = $data['uname'];
+      $Pass = $data['password'];
+
+      $res = $this->Users_model->login($Name, $Pass);
+      if($res){
+        echo json_encode($this->generateToken($res), JSON_UNESCAPED_UNICODE);
+      } else {
+        echo json_encode(array('token' => false), JSON_UNESCAPED_UNICODE)
+      }
+    }
+
+    private function generateToken($ID){
       $tokenData = array();
-      $tokenData['id'] = 1; //TODO: Replace with data for token
+      $tokenData['id'] = $ID; //TODO: Replace with data for token
       $output['token'] = AUTHORIZATION::generateToken($tokenData);
-      echo json_encode($output, JSON_UNESCAPED_UNICODE);
+      return $output;
     }
 
   }

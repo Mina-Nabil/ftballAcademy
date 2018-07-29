@@ -71,6 +71,7 @@ $route['Api/getPosition/(:num)']        = 'Positions/getPosition/$1';
 
 //Users API
 $route['Api/getUsers']        = 'Users/getUsers';
+$route['Api/login']        = 'Users/authenticate';
 
 //charts
 $route['Api/getChart/(:num)/(:num)/(:num)'] = 'Sessions/getChart/$1/$2/$3';
