@@ -37,7 +37,8 @@
     private function generateToken($ID){
       $tokenData = array();
       $tokenData['sub'] = $ID; //TODO: Replace with data for token
-      $tokenData['exp'] = now();
+      $tokenData['exp'] = time() + (0 * 0 * 30 * 60);
+                   // 7 days; 24 hours; 60 mins; 60 secs
       $output['token'] = AUTHORIZATION::generateToken($tokenData);
       return $output;
     }
