@@ -30,7 +30,7 @@
       if($res){
         echo json_encode($this->generateToken($res), JSON_UNESCAPED_UNICODE);
       } else {
-        echo json_encode(array('token' => false), JSON_UNESCAPED_UNICODE)
+        echo json_encode(array('token' => false), JSON_UNESCAPED_UNICODE);
       }
     }
 
