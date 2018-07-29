@@ -24,7 +24,7 @@ class Users_model extends CI_Model{
                      AND   USER_PASS  = ?";
           $query = $this->db->query($strSQL, array($Name, $Pass));
           $res = $query->result_array();
-          if(is_null($res[0]['USER_ID']) || (sizeof($res) > 1)) return false;
+          if(sizeof($res) == 0 || (sizeof($res) > 1)) return false;
           else return $res[0]['USER_ID'];
         }
 
