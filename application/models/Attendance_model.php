@@ -27,7 +27,7 @@ class Attendance_model extends CI_Model{
         public function takeattendance($StudentBarcode){
           $Date = new DateTime(null, new DateTimeZone('Africa/Cairo'));
           $Session = $this->getCurrentSession($StudentBarcode);
-          if ($Session['res'] == 0) return array('result' => 0);;
+          if ($Session['res'] == 0) return array('result' => 0);
           else if($Session['res'] == 0) return 0;
           else {
             $Start = new DateTime($Session['class']['SESS_STRT_DATE']);
