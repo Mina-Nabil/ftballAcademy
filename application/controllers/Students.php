@@ -51,7 +51,7 @@
         $Since  = date("Y-m-d");
       }
       if($Name !== null && $BirthD !==null && $ParentName!==null && $MentorName!==null && $ParentTel!==null)
-      echo json_encode($this->Students_model->insertStudent($Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Barcode, $Weight, $Height, $Barcode, $Since), JSON_UNESCAPED_UNICODE);
+      echo json_encode($this->Students_model->insertStudent($Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Height, $Barcode, $Since), JSON_UNESCAPED_UNICODE);
       else
       die("Invalid Arguments");
 
