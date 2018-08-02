@@ -1,7 +1,9 @@
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteEngine On  
+# If an existing asset or directory is requested go to it as it is
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]  
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d  
+RewriteRule ^ - [L]
 
-# not rewrite css, js and images
-RewriteCond %{REQUEST_URI} !\.(?:css|js|map|jpe?g|gif|png)$ [NC]
-RewriteRule ^(.*)$ /index.html?path=$1 [NC,L,QSA]
+# If the requested resource doesn't exist, use index.html
+RewriteRule ^ /index.html 
+
