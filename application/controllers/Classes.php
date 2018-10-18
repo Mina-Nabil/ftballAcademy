@@ -54,8 +54,10 @@
         $classDesc = $data['CLSS_DESC'];
         $classYear = $data['CLSS_YEAR'];
       }
-      if($className !== null && $classDesc !==null && $classYear!==null)
-      echo json_encode($this->Classes_model->insertClass($className, $classDesc, $classYear), JSON_UNESCAPED_UNICODE);
+      if($className !== null && $classDesc !==null && $classYear!==null){
+
+        echo json_encode($this->Classes_model->insertClass($className, $classDesc, $classYear), JSON_UNESCAPED_UNICODE);
+      }
       else
       die("Invalid Arguments");
 
@@ -71,8 +73,11 @@
         $classYear = $data['CLSS_YEAR'];
 
       }
-      if($classID !==null && $className !== null && $classDesc !==null && $classYear!==null)
-      echo json_encode($this->Classes_model->editClass($classID, $className, $classDesc, $classYear), JSON_UNESCAPED_UNICODE);
+      if($classID !==null && $className !== null && $classDesc !==null && $classYear!==null){
+        echo json_encode($this->Classes_model->editClass($classID, $className, $classDesc, $classYear), JSON_UNESCAPED_UNICODE);
+
+
+      }
       else
       die("Invalid Arguments");
 

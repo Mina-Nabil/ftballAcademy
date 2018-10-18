@@ -47,11 +47,12 @@
         $ParentName = $data['STUD_PRNT_NAME'];
         $MentorName = $data['STUD_MNTR_NAME'];
         $PrevClub  = $data['STUD_PREV_CLUB'];
+        $AccessCode  = $data['STUD_ACCS_CODE'];
         $Barcode  = $data['STUD_BARCODE'];
         $Since  = date("Y-m-d");
       }
       if($Name !== null && $BirthD !==null && $ParentName!==null && $MentorName!==null && $ParentTel!==null)
-      echo json_encode($this->Students_model->insertStudent($Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Height, $Barcode, $Since), JSON_UNESCAPED_UNICODE);
+      echo json_encode($this->Students_model->insertStudent($Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Height, $AccessCode, $Barcode, $Since), JSON_UNESCAPED_UNICODE);
       else
       die("Invalid Arguments");
 
@@ -73,10 +74,11 @@
         $ParentName = $data['STUD_PRNT_NAME'];
         $MentorName = $data['STUD_MNTR_NAME'];
         $PrevClub  = $data['STUD_PREV_CLUB'];
+        $AccessCode  = $data['STUD_ACCS_CODE'];
         $Barcode  = $data['STUD_BARCODE'];
       }
       if($Name !== null && $BirthD !==null && $ParentName!==null && $MentorName!==null && $ParentTel!==null)
-      echo json_encode($this->Students_model->editStudent($StudentID, $Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Barcode, $Weight, $Height), JSON_UNESCAPED_UNICODE);
+      echo json_encode($this->Students_model->editStudent($StudentID, $Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $AccessCode, $Barcode, $Weight, $Height), JSON_UNESCAPED_UNICODE);
       else
       die("Invalid Arguments");
 
