@@ -12,7 +12,7 @@ class Classes_model extends CI_Model{
         public function getClasses(){
 
           $strSQL = "SELECT CLSS_ID, CLSS_NAME, CLSS_DESC, CLSS_YEAR
-                      FROM Classes";
+                      FROM classes";
           $query = $this->db->query($strSQL);
           return $query->result_array();
 
@@ -21,7 +21,7 @@ class Classes_model extends CI_Model{
         public function getClass_byID($ID){
 
           $strSQL = "SELECT CLSS_ID, CLSS_NAME, CLSS_DESC, CLSS_YEAR
-                    FROM Classes WHERE CLSS_ID = {$ID}";
+                    FROM classes WHERE CLSS_ID = {$ID}";
           $query = $this->db->query($strSQL);
           return $query->result_array();
 
@@ -60,7 +60,7 @@ class Classes_model extends CI_Model{
           $NextMonth = $Month + 1;
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
-          $strSQL = "SELECT TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s') as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s') as totalDuration FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -171,7 +171,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -185,7 +185,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -199,7 +199,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-21");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -214,7 +214,7 @@ class Classes_model extends CI_Model{
           $NextMonth = $Month + 1;
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM Attendance
+          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
@@ -226,20 +226,20 @@ class Classes_model extends CI_Model{
 
         public function insertClass($Name, $Desc, $Year){
             //NN Text ArabicName Name DistrictID
-          $strSQL = "INSERT INTO Classes (CLSS_NAME, CLSS_DESC, CLSS_YEAR)
+          $strSQL = "INSERT INTO classes (CLSS_NAME, CLSS_DESC, CLSS_YEAR)
                      VALUES (?, ?, ?)";
 
           $inputs = array($Name, $Desc, $Year);
           $query = $this->db->query($strSQL, $inputs);
           $strSQL = "SELECT CLSS_ID, CLSS_NAME, CLSS_DESC, CLSS_YEAR
-                    FROM Classes WHERE CLSS_ID = LAST_INSERT_ID() ";
+                    FROM classes WHERE CLSS_ID = LAST_INSERT_ID() ";
           $query = $this->db->query($strSQL);
           return $query->result_array()[0];
         }
 
         public function editClass($ID, $Name, $Desc, $Year){
             //NN Text ArabicName Name DistrictID
-          $strSQL = "UPDATE Classes
+          $strSQL = "UPDATE classes
                     SET CLSS_NAME    = ?,
                         CLSS_DESC    = ?,
                         CLSS_YEAR    = ?
@@ -248,7 +248,7 @@ class Classes_model extends CI_Model{
           $inputs = array($Name, $Desc, $Year, $ID);
           $query = $this->db->query($strSQL, $inputs);
           $strSQL = "SELECT CLSS_ID, CLSS_NAME, CLSS_DESC, CLSS_YEAR
-                    FROM Classes WHERE CLSS_ID = {$ID} ";
+                    FROM classes WHERE CLSS_ID = {$ID} ";
           $query = $this->db->query($strSQL);
           return $query->result_array()[0];
 

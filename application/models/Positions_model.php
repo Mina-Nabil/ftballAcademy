@@ -12,7 +12,7 @@ class Positions_model extends CI_Model{
         public function getPositions(){
 
           $strSQL = "SELECT POST_ID, POST_NAME, POST_ABB
-                      FROM Positions";
+                      FROM positions";
           $query = $this->db->query($strSQL);
           return $query->result_array();
 
@@ -21,7 +21,7 @@ class Positions_model extends CI_Model{
         public function getPosition_byID($ID){
 
           $strSQL = "SELECT POST_ID, POST_NAME, POST_ABB
-                    FROM Positions WHERE POST_ID = {$ID}";
+                    FROM positions WHERE POST_ID = {$ID}";
           $query = $this->db->query($strSQL);
           return $query->result_array()[0];
 
@@ -30,7 +30,7 @@ class Positions_model extends CI_Model{
 
         public function insertPositions($Name, $Abb){
             //NN Text ArabicName Name DistrictID
-          $strSQL = "INSERT INTO Positions (POST_NAME, POST_ABB)
+          $strSQL = "INSERT INTO positions (POST_NAME, POST_ABB)
                      VALUES (?,?)";
 
           $inputs = array($Name, $Abb);
@@ -40,7 +40,7 @@ class Positions_model extends CI_Model{
 
         public function editPositions($ID, $Name, $Abb){
             //NN Text ArabicName Name DistrictID
-          $strSQL = "UPDATE Positions
+          $strSQL = "UPDATE positions
                     SET POST_NAME   = ?, POST_ABB = ?
                     WHERE
                         `POST_ID`= ?";
@@ -50,7 +50,7 @@ class Positions_model extends CI_Model{
         }
 
         public function deletePositions($ID){
-          $strSQL = "DELETE FROM Positions WHERE POST_ID = {$ID}";
+          $strSQL = "DELETE FROM positions WHERE POST_ID = {$ID}";
           $query = $this->db->query($strSQL);
         }
 

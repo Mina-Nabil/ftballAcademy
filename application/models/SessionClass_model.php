@@ -76,7 +76,7 @@ class SessionClass_model extends CI_Model{
         }
 
         public function deleteSessionClass($SessID, $ClassID){
-          $strSQL = "DELETE FROM SessionClass WHERE SSCL_SESS_ID = {$SessID} AND SSCL_CLSS_ID = {$ClassID}";
+          $strSQL = "DELETE FROM session_class WHERE SSCL_SESS_ID = {$SessID} AND SSCL_CLSS_ID = {$ClassID}";
           $query = $this->db->query($strSQL);
         }
 
