@@ -69,7 +69,7 @@
         $className = $data['CLSS_NME'];
         $classDesc = $data['CLSS_DESC'];
         $classYear = $data['CLSS_YEAR'];
-        echo $className;
+
       }
       if($classID !==null && $className !== null && $classDesc !==null && $classYear!==null)
       echo json_encode($this->Classes_model->editClass($classID, $className, $classDesc, $classYear), JSON_UNESCAPED_UNICODE);
