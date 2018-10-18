@@ -88,6 +88,7 @@ class Students_model extends CI_Model{
                         STUD_LGTH     =  ?
                     WHERE
                         `STUD_ID`= ?";
+                        
           $inputs = array($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $AccessCode, $Barcode, $Weight, $Length, $ID);
           $query = $this->db->query($strSQL, $inputs);
           $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL,
