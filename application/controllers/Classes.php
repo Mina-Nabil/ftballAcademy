@@ -39,7 +39,7 @@
         foreach($classes as $class){
           array_push($temp, array(
             'state' => $class['CLSS_ID'],
-            'name'  => 'Class: ' . $class['CLSS_NAME']
+            'name'  => 'Class: ' . $class['CLSS_NME']
           ));
         }
         echo json_encode($temp, JSON_UNESCAPED_UNICODE);
@@ -50,7 +50,7 @@
       if($this->permitApiCall($key)){
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $className = $data['CLSS_NAME'];
+        $className = $data['CLSS_NME'];
         $classDesc = $data['CLSS_DESC'];
         $classYear = $data['CLSS_YEAR'];
       }
@@ -66,7 +66,7 @@
         $data = json_decode(file_get_contents('php://input'), true);
 
         $classID = $data['CLSS_ID'];
-        $className = $data['CLSS_NAME'];
+        $className = $data['CLSS_NME'];
         $classDesc = $data['CLSS_DESC'];
         $classYear = $data['CLSS_YEAR'];
       }

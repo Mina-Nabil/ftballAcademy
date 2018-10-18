@@ -11,7 +11,7 @@ class Classes_model extends CI_Model{
 
         public function getClasses(){
 
-          $strSQL = "SELECT CLSS_ID, CLSS_NAME, CLSS_DESC, CLSS_YEAR
+          $strSQL = "SELECT CLSS_ID, CLSS_NME, CLSS_DESC, CLSS_YEAR
                       FROM classes";
           $query = $this->db->query($strSQL);
           return $query->result_array();
@@ -20,7 +20,7 @@ class Classes_model extends CI_Model{
 
         public function getClass_byID($ID){
 
-          $strSQL = "SELECT CLSS_ID, CLSS_NAME, CLSS_DESC, CLSS_YEAR
+          $strSQL = "SELECT CLSS_ID, CLSS_NME, CLSS_DESC, CLSS_YEAR
                     FROM classes WHERE CLSS_ID = {$ID}";
           $query = $this->db->query($strSQL);
           return $query->result_array();
@@ -226,12 +226,12 @@ class Classes_model extends CI_Model{
 
         public function insertClass($Name, $Desc, $Year){
             //NN Text ArabicName Name DistrictID
-          $strSQL = "INSERT INTO classes (CLSS_NAME, CLSS_DESC, CLSS_YEAR)
+          $strSQL = "INSERT INTO classes (CLSS_NME, CLSS_DESC, CLSS_YEAR)
                      VALUES (?, ?, ?)";
 
           $inputs = array($Name, $Desc, $Year);
           $query = $this->db->query($strSQL, $inputs);
-          $strSQL = "SELECT CLSS_ID, CLSS_NAME, CLSS_DESC, CLSS_YEAR
+          $strSQL = "SELECT CLSS_ID, CLSS_NME, CLSS_DESC, CLSS_YEAR
                     FROM classes WHERE CLSS_ID = LAST_INSERT_ID() ";
           $query = $this->db->query($strSQL);
           return $query->result_array()[0];
@@ -240,14 +240,14 @@ class Classes_model extends CI_Model{
         public function editClass($ID, $Name, $Desc, $Year){
             //NN Text ArabicName Name DistrictID
           $strSQL = "UPDATE classes
-                    SET CLSS_NAME    = ?,
+                    SET CLSS_NME    = ?,
                         CLSS_DESC    = ?,
                         CLSS_YEAR    = ?
                     WHERE
                         `CLSS_ID`    = ?";
           $inputs = array($Name, $Desc, $Year, $ID);
           $query = $this->db->query($strSQL, $inputs);
-          $strSQL = "SELECT CLSS_ID, CLSS_NAME, CLSS_DESC, CLSS_YEAR
+          $strSQL = "SELECT CLSS_ID, CLSS_NME, CLSS_DESC, CLSS_YEAR
                     FROM classes WHERE CLSS_ID = {$ID} ";
           $query = $this->db->query($strSQL);
           return $query->result_array()[0];

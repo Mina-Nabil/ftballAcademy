@@ -12,7 +12,7 @@ class Attendance_model extends CI_Model{
 
         public function getAttendance_bySession($ID){
 
-          $strSQL = "SELECT SESS_ID, STUD_ID, CLSS_ID, ATTND, SESS_NAME, CLSS_NAME, CLSS_YEAR, STUD_NAME, ATTND_TIME, ATTND_DUR
+          $strSQL = "SELECT SESS_ID, STUD_ID, CLSS_ID, ATTND, SESS_NAME, CLSS_NME, CLSS_YEAR, STUD_NAME, ATTND_TIME, ATTND_DUR
                     FROM attendance, students, classes, sessions
                     WHERE
                         attendance.CLSS_ID = classes.CLSS_ID
