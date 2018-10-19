@@ -11,7 +11,7 @@ class Students_model extends CI_Model{
 
         public function getStudents(){
 
-          $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL, STUD_CSID, 
+          $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL, STUD_CSID,
                             STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS,STUD_WGHT, STUD_LGTH, POST_NAME, POST_ABB, STUD_BARCODE, STUD_SINCE, STUD_ACCS_CODE, CLSS_NME as STUD_CLSS_NME
                       FROM students,  positions, classes
                       WHERE   STUD_FAV_POS = POST_ID
@@ -50,7 +50,7 @@ class Students_model extends CI_Model{
         }
 
 
-        public function insertStudent($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length, $AccessCode, $Barcode, $Since){
+        public function insertStudent($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length, $AccessCode, $Barcode, $Since, $CSID){
             //NN Text ArabicName Name DistrictID
           $strSQL = "INSERT INTO students (STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL, STUD_PRNT_NAME,
                                            STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH, STUD_ACCS_CODE, STUD_BARCODE, STUD_SINCE, STUD_CSID)
