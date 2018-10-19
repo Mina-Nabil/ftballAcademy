@@ -37,7 +37,8 @@ class Attendance_model extends CI_Model{
             echo $Date->format('Y-m-d H:i:s');
             echo '<br>' . $Start->format('Y-m-d H:i:s');
             echo '<br>' . $Dur1->format('H:i:s');
-            echo '<br>' . $Dur1->format('H:i:s');
+            echo '<br>' . $Dur1->format('H:i:s') . '<br>';
+            var_dump($Date < $Start);
             if($Date < $Start) {
 
               $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur1->format('%H:%i:%s'));
