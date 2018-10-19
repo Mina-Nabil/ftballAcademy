@@ -11,7 +11,7 @@ class Students_model extends CI_Model{
 
         public function getStudents(){
 
-          $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL,
+          $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL, STUD_CSID, 
                             STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS,STUD_WGHT, STUD_LGTH, POST_NAME, POST_ABB, STUD_BARCODE, STUD_SINCE, STUD_ACCS_CODE, CLSS_NME as STUD_CLSS_NME
                       FROM students,  positions, classes
                       WHERE   STUD_FAV_POS = POST_ID
@@ -24,7 +24,7 @@ class Students_model extends CI_Model{
         public function getStudent_byID($ID){
 
           $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL,
-                            STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH,
+                            STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH, STUD_CSID,
                             CLSS_NME as STUD_CLSS_NME, CLSS_YEAR, POST_NAME, STUD_ACCS_CODE, POST_ABB, STUD_BARCODE, STUD_SINCE
                       FROM students, classes, positions
                       WHERE STUD_CLSS_ID = CLSS_ID
@@ -38,7 +38,7 @@ class Students_model extends CI_Model{
         public function getStudent_byClass($ID){
 
           $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL,
-                            STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH,
+                            STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH, STUD_CSID,
                             CLSS_NME as STUD_CLSS_NME, CLSS_YEAR, POST_NAME, STUD_ACCS_CODE, POST_ABB, STUD_BARCODE, STUD_SINCE
                       FROM students, classes, positions
                       WHERE STUD_CLSS_ID = CLSS_ID
@@ -53,10 +53,10 @@ class Students_model extends CI_Model{
         public function insertStudent($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length, $AccessCode, $Barcode, $Since){
             //NN Text ArabicName Name DistrictID
           $strSQL = "INSERT INTO students (STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL, STUD_PRNT_NAME,
-                                           STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH, STUD_ACCS_CODE, STUD_BARCODE, STUD_SINCE)
-                     VALUES               (?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?)";
+                                           STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH, STUD_ACCS_CODE, STUD_BARCODE, STUD_SINCE, STUD_CSID)
+                     VALUES               (?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?)";
 
-          $inputs = array($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length, $AccessCode, $Barcode, $Since);
+          $inputs = array($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Length, $AccessCode, $Barcode, $Since, $CSID);
           $query = $this->db->query($strSQL, $inputs);
           $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL,
                             STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH,
@@ -69,7 +69,7 @@ class Students_model extends CI_Model{
           return $query->result_array()[0];
         }
 
-        public function editStudent($ID, $Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $AccessCode, $Barcode, $Weight, $Length){
+        public function editStudent($ID, $Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $AccessCode, $Barcode, $Weight, $Length, $CSID){
             //NN Text ArabicName Name DistrictID
           $strSQL = "UPDATE students
                     SET STUD_NAME   = ?,
@@ -85,11 +85,12 @@ class Students_model extends CI_Model{
                         STUD_ACCS_CODE     =  ?,
                         STUD_BARCODE     =  ?,
                         STUD_WGHT     = ?,
-                        STUD_LGTH     =  ?
+                        STUD_LGTH     =  ?,
+                        STUD_CSID     =  ?
                     WHERE
                         `STUD_ID`= ?";
-                        
-          $inputs = array($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $AccessCode, $Barcode, $Weight, $Length, $ID);
+
+          $inputs = array($Name, $Tel, $BirthDate, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $AccessCode, $Barcode, $Weight, $Length, $CSID, $ID);
           $query = $this->db->query($strSQL, $inputs);
           $strSQL = "SELECT STUD_ID, STUD_NAME, STUD_TEL, STUD_BD, STUD_PRNT_TEL, STUD_CLSS_ID, STUD_PRNT_TELL,
                             STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS, STUD_WGHT, STUD_LGTH,
