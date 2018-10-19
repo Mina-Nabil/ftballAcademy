@@ -25,7 +25,7 @@ class Attendance_model extends CI_Model{
         }
 
         public function takeattendance($StudentBarcode){
-          $Date = new DateTime(null, new DateTimeZone('Africa/Cairo'));
+          $Date = new DateTime("now", new DateTimeZone('Africa/Cairo'));
           $Session = $this->getCurrentSession($StudentBarcode);
           if ($Session['res'] == 0) return array('result' => 0);
           else if($Session['res'] == 0) return 0;
@@ -37,11 +37,10 @@ class Attendance_model extends CI_Model{
             echo $Date->format('Y-m-d H:i:s');
             echo '<br>' . $Start->format('Y-m-d H:i:s');
             echo '<br>' . $End->format('Y-m-d H:i:s');
-            echo '<br>' . $Dur1->format('%H:%i:%s');
-            echo '<br>' . $Dur2->format('%H:%i:%s') . '<br>';
-            var_dump($Date < $Start);
-            var_dump($Date->format('u') < $Start->format('u'));
-            if($Date < $Start) {
+            echo '<br>' . $End->diff($Start)->format('%H:%i:%s');
+            echo '<br>' . $End->diff($Date)->format('%H:%i:%s') . '<br>';
+
+            if($Date->format('u') < $Start->format('u')) {
 
               $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur1->format('%H:%i:%s'));
             }else {
