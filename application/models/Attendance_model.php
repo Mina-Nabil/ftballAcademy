@@ -37,7 +37,7 @@ class Attendance_model extends CI_Model{
             echo $Date->format('Y-m-d H:i:s');
             echo '<br>' . $Start->format('Y-m-d H:i:s');
             echo '<br>' . $Dur1->format('%H:%i:%s');
-            echo '<br>' . $Dur1->format('%H:%i:%s') . '<br>';
+            echo '<br>' . $Dur2->format('%H:%i:%s') . '<br>';
             var_dump($Date < $Start);
             var_dump($Date->format('u') < $Start->format('u'));
             if($Date < $Start) {
