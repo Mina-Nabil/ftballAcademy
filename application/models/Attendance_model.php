@@ -30,17 +30,11 @@ class Attendance_model extends CI_Model{
           if ($Session['res'] == 0) return array('result' => 0);
           else if($Session['res'] == 0) return 0;
           else {
-            $Start = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_STRT_DATE']);
-            $End = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_END_DATE']);
+            $Start = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_STRT_DATE'], new DateTimeZone('Africa/Cairo'));
+            $End = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_END_DATE'], new DateTimeZone('Africa/Cairo'));
+
             $Dur2 = $Date->diff($End);
-            $Dur3 = $Start->diff($End);
-            $Dur1 = $Start->diff($Date);
-            echo $Start->format('Y-m-d H:i:s A P') . '<br>';
-            echo $End->format('Y-m-d H:i:s A P') . '<br>';
-            echo $Date->format('Y-m-d H:i:s A P') . '<br>';
-            echo $Dur1->format('%H:%i:%s') . '<br>';
-            echo $Dur3->format('%H:%i:%s') . '<br>';
-            echo $Dur2->format('%H:%i:%s');
+            $Dur1 = $Start->diff($End);
 
             if($Date->format('u') < $Start->format('u')) {
 
