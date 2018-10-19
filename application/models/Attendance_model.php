@@ -35,6 +35,9 @@ class Attendance_model extends CI_Model{
             $Dur2 = $Date->diff($End);
             $Dur3 = $Start->diff($End);
             $Dur1 = $Start->diff($Date);
+            echo $Start->format('Y-m-d H:i:s A P') . '<br>';
+            echo $End->format('Y-m-d H:i:s A P') . '<br>';
+            echo $Date->format('Y-m-d H:i:s A P') . '<br>';
             echo $Dur1->format('%H:%i:%s') . '<br>';
             echo $Dur3->format('%H:%i:%s') . '<br>';
             echo $Dur2->format('%H:%i:%s');
