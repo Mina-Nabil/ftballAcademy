@@ -34,8 +34,8 @@ class Attendance_model extends CI_Model{
             $End = new DateTime($Session['class']['SESS_END_DATE']);
             $Dur1 = date_diff($End, $Start);
             $Dur2 = date_diff($End, $Date);
-  
-            if($$Date->format('u') < $Start->format('u')) {
+
+            if($Date->format('u') < $Start->format('u')) {
 
               $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur1->format('%H:%i:%s'));
             }else {
