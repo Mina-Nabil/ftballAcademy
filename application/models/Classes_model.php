@@ -186,7 +186,7 @@ class Classes_model extends CI_Model{
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
 
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
-                     WHERE STUD_ID = ?
+                     WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?";
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
