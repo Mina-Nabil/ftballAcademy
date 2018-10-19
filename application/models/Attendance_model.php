@@ -30,15 +30,10 @@ class Attendance_model extends CI_Model{
           if ($Session['res'] == 0) return array('result' => 0);
           else if($Session['res'] == 0) return 0;
           else {
-            $Start = new DateTime($Session['class']['SESS_STRT_DATE']);
-            $End = new DateTime($Session['class']['SESS_END_DATE']);
+            $Start = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_STRT_DATE']);
+            $End = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_END_DATE']);
             $Dur2 = date_diff($End, $Date);
             $Dur1 = date_diff($End, $Start);
-            echo $Date->format('Y-m-d H:i:s');
-            echo '<br>' . $Start->format('Y-m-d H:i:s');
-            echo '<br>' . $End->format('Y-m-d H:i:s');
-            echo '<br>' . $End->diff($Start)->format('%H:%i:%s');
-            echo '<br>' . $End->diff($Date)->format('%H:%i:%s') . '<br>';
 
             if($Date->format('u') < $Start->format('u')) {
 
