@@ -34,7 +34,9 @@ class Attendance_model extends CI_Model{
             $End = new DateTime($Session['class']['SESS_END_DATE']);
             $Dur1 = date_diff($End, $Start);
             $Dur2 = date_diff($End, $Date);
-            if($Date <= $Start) {
+            echo $Date->format('Y-m-d H:i:s');
+            echo $Start->format('Y-m-d H:i:s');
+            if($Date < $Start) {
 
               $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur1->format('%H:%i:%s'));
             }else {
@@ -47,7 +49,7 @@ class Attendance_model extends CI_Model{
         }
 
         private function getCurrentSession($StudentBarcode){
-
+          //NOW(), INTERVAL 2 hour Cairo Timing
           $strSQL = "SELECT sessions.SESS_ID, SESS_STRT_DATE, SESS_END_DATE, students.STUD_ID
                      FROM sessions, classes, session_class, students, attendance
                      WHERE sessions.SESS_ID = SSCL_SESS_ID
