@@ -34,6 +34,8 @@ class Attendance_model extends CI_Model{
             $End = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_END_DATE']);
             $Dur2 = $Date->diff($End);
             $Dur1 = $Start->diff($End);
+            echo $Dur1->format('%H:%i:%s') . '<br>';
+            echo $Dur2->format('%H:%i:%s');
 
             if($Date->format('u') < $Start->format('u')) {
 
