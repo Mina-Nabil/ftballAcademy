@@ -94,7 +94,7 @@
       }
 
       public function deleteSession($SessID){
-        $this->Sessions_model->deleteSession($SessID);
+        echo $this->Sessions_model->deleteSession($SessID);
       }
 
 

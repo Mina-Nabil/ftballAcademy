@@ -83,7 +83,7 @@ class Sessions_model extends CI_Model{
           $query = $this->db->query($strSQL);
           $strSQL = "DELETE FROM sessions WHERE SESS_ID = {$ID}";
           $query = $this->db->query($strSQL);
-          $this->db->trans_complete();
+          return $this->db->trans_complete();
         }
 
 }
