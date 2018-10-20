@@ -95,10 +95,12 @@
 
       public function TakeAttendancefromTable($SessID, $StudentID){
         $this->Attendance_model->editAttendance_CheckOnly($SessID, $StudentID, 1);
+        $this->getAttendanceList($SessID);
       }
 
       public function CancelAttendancefromTable($SessID, $StudentID){
         $this->Attendance_model->editAttendance_CheckOnly($SessID, $StudentID, 0);
+        $this->getAttendanceList($SessID);
       }
 
       public function deleteSession($SessID){
