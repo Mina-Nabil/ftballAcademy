@@ -89,6 +89,8 @@ $route['Api/deleteSession/(:num)'] = 'Sessions/deleteSession/$1';
 
 //Attendance List
 $route['Api/getattendancelist/(:num)'] = 'Sessions/getAttendanceList/$1';
+$route['Api/setattendancetrue/(:num)/(:num)'] = 'Sessions/TakeAttendancefromTable/$1/$2';
+$route['Api/setattendancefalse/(:num)/(:num)'] = 'Sessions/CancelAttendancefromTable/$1/$2';
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';

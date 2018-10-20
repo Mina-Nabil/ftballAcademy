@@ -297,6 +297,17 @@ class Attendance_model extends CI_Model{
           $query = $this->db->query($strSQL, $inputs);
 
         }
+        public function editAttendance_CheckOnly($SessionID, $StudentID, $Attended){
+            //NN Text ArabicSDate SDate DistrictID
+          $strSQL = "UPDATE attendance
+                    SET ATTND        = ?
+                    WHERE
+                        SESS_ID    = ?
+                    AND STUD_ID   =  ?";
+          $inputs = array($Attended, $SessionID, $StudentID);
+          $query = $this->db->query($strSQL, $inputs);
+
+        }
 
         public function deleteAttendance($ID){
           $strSQL = "DELETE FROM attendance WHERE SESS_ID = {$ID}";
