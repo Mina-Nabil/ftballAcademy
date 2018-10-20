@@ -172,7 +172,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
           //SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(ATTND_DUR))) / 3600 as totalDuration FROM attendance WHERE CLSS_ID = 6 AND ATTND = 1
-          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600) as totalDuration  FROM attendance
+          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600, 1) as totalDuration  FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?
@@ -187,7 +187,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
 
-          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600) as totalDuration  FROM attendance
+          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600, 1) as totalDuration  FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?
@@ -202,7 +202,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-21");
 
-          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600) as totalDuration  FROM attendance
+          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600, 1) as totalDuration  FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?
@@ -218,7 +218,7 @@ class Classes_model extends CI_Model{
           $NextMonth = $Month + 1;
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
-          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600) as totalDuration  FROM attendance
+          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600, 1) as totalDuration  FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
                      AND ATTND_TIME > ?
