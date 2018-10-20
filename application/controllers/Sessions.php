@@ -12,6 +12,10 @@
 
     }
 
+    public function getAttendanceList($SessID){
+      echo json_encode($this->Attendance_model->getAttendance_bySession($SessID), JSON_UNESCAPED_UNICODE);
+    }
+
     public function getAllSessions($key=''){
       if($this->permitApiCall($key)){
         echo json_encode($this->Sessions_model->getSessions(), JSON_UNESCAPED_UNICODE);

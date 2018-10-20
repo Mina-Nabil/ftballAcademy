@@ -33,15 +33,10 @@ class Attendance_model extends CI_Model{
             $Start = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_STRT_DATE'], new DateTimeZone('Africa/Cairo'));
             $End = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_END_DATE'], new DateTimeZone('Africa/Cairo'));
 
-            $Dur2 = $Date->diff($End);
             $Dur1 = $Start->diff($End);
 
-            if($Date->format('u') < $Start->format('u')) {
+            $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur1->format('%H:%i:%s'));
 
-              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur1->format('%H:%i:%s'));
-            }else {
-              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur2->format('%H:%i:%s'));
-            }
             return array('result' => 1);
           }
 
@@ -58,15 +53,15 @@ class Attendance_model extends CI_Model{
                      AND students.STUD_ID = attendance.STUD_ID
                      AND sessions.SESS_ID = attendance.SESS_ID
                      AND STUD_BARCODE = ?
-                     AND DATE_ADD(NOW(), INTERVAL 2 hour) < SESS_END_DATE
-                     AND DATE_ADD(NOW(), INTERVAL 2 hour) > DATE_SUB(SESS_STRT_DATE, INTERVAL 1 hour)
+                     AND DATE_ADD(NOW(), INTERVAL 2 hour) <  DATE_ADD(SESS_END_DATE, INTERVAL 10 hour)
+                     AND DATE_ADD(NOW(), INTERVAL 2 hour) > DATE_SUB(SESS_STRT_DATE, INTERVAL 3 hour)
                      AND ATTND = 0";
 
           $inputs = array($StudentBarcode);
           $query = $this->db->query($strSQL, $inputs);
           $res = $query->result_array();
-          if(count($res) > 1) return array('res' => 2);
-          else if(count($res) == 1)return array('res' => 1, 'class' => $res[0]);
+          if(count($res) > 1) return array('res' => 2); //More than one session
+          else if(count($res) == 1)return array('res' => 1, 'class' => $res[0]); // no sessions
           else return array('res' => 0);
 
         }

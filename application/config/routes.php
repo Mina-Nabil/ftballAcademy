@@ -86,6 +86,9 @@ $route['Api/getSession_limit/(:num)'] = 'Sessions/getSession_CalendarEvent/$1';
 $route['Api/addSession']          = 'Sessions/addSession';
 $route['Api/editSession/(:num)'] = 'Sessions/editSession/$1';
 
+//Attendance List
+$route['Api/getattendancelist/(:num)'] = 'Sessions/getAttendanceList/$1';
+
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
