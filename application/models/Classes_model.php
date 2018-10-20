@@ -63,7 +63,8 @@ class Classes_model extends CI_Model{
           $strSQL = "SELECT TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s') as totalDuration FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           $res = $query->result_array()[0]['totalDuration'];
           if(is_null($res)) $res = '00:00:00';
@@ -174,7 +175,8 @@ class Classes_model extends CI_Model{
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -188,7 +190,8 @@ class Classes_model extends CI_Model{
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -202,7 +205,8 @@ class Classes_model extends CI_Model{
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -217,7 +221,8 @@ class Classes_model extends CI_Model{
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
 
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];

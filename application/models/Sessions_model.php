@@ -75,9 +75,15 @@ class Sessions_model extends CI_Model{
           return $query->result_array()[0];
         }
 
-        public function deleteSessions($ID){
+        public function deleteSession($ID){
+          $this->db->trans_start();
+          $strSQL = "DELETE FROM session_class WHERE SSCL_SESS_ID = {$ID} ";
+          $query = $this->db->query($strSQL);
+          $strSQL = "DELETE FROM attendance WHERE SESS_ID = {$ID} ";
+          $query = $this->db->query($strSQL);
           $strSQL = "DELETE FROM sessions WHERE SESS_ID = {$ID}";
           $query = $this->db->query($strSQL);
+          $this->db->trans_complete();
         }
 
 }

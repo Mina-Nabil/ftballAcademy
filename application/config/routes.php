@@ -85,6 +85,7 @@ $route['Api/takeAttendance/(:any)'] = 'Sessions/takeAttendance/$1';
 $route['Api/getSession_limit/(:num)'] = 'Sessions/getSession_CalendarEvent/$1';
 $route['Api/addSession']          = 'Sessions/addSession';
 $route['Api/editSession/(:num)'] = 'Sessions/editSession/$1';
+$route['Api/deleteSession/(:num)'] = 'Sessions/deleteSession/$1';
 
 //Attendance List
 $route['Api/getattendancelist/(:num)'] = 'Sessions/getAttendanceList/$1';

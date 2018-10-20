@@ -43,6 +43,17 @@ class Attendance_model extends CI_Model{
 
         }
 
+        private function getSessionDuration($SessID){
+          $strSQL     = "SELECT sessions.SESS_ID, SESS_STRT_DATE, SESS_END_DATE
+                        FROM sessions WHERE SESS_ID = ?";
+          $query      = $this->db->query($strSQL, array($SessID));
+          $Session    = $query->result_array()[0];
+          $Start      = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_STRT_DATE'], new DateTimeZone('Africa/Cairo'));
+          $End        = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_END_DATE'], new DateTimeZone('Africa/Cairo'));
+
+          return $Start->diff($End)->format('%H:%i:%s');
+        }
+
         private function getCurrentSession($StudentBarcode){
           //NOW(), INTERVAL 2 hour Cairo Timing
           $strSQL = "SELECT sessions.SESS_ID, SESS_STRT_DATE, SESS_END_DATE, students.STUD_ID
@@ -69,7 +80,7 @@ class Attendance_model extends CI_Model{
         public function createAttendanceList($SessionID, $ClassID){
           $studentsIDs = $this->Classes_model->getStudentIDs($ClassID);
           foreach($studentsIDs as $ID){
-            $this->insertAttendance($SessionID, $ID['STUD_ID'], $ClassID);
+            $this->insertAttendance($SessionID, $ID['STUD_ID'], $ClassID, $this->getSessionDuration($SessionID));
           }
         }
 
@@ -102,7 +113,8 @@ class Attendance_model extends CI_Model{
           $strSQL = "SELECT TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s') as totalDuration FROM attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -209,7 +221,8 @@ class Attendance_model extends CI_Model{
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -223,7 +236,8 @@ class Attendance_model extends CI_Model{
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -237,7 +251,8 @@ class Attendance_model extends CI_Model{
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -252,18 +267,19 @@ class Attendance_model extends CI_Model{
           $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
 
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
 
-        public function insertAttendance($SessionID, $StudentID, $ClassID){
+        public function insertAttendance($SessionID, $StudentID, $ClassID, $Duration){
             //NN Text ArabicSDate SDate DistrictID
-          $strSQL = "INSERT INTO attendance (SESS_ID, STUD_ID, CLSS_ID)
-                     VALUES (?, ?, ?)";
+          $strSQL = "INSERT INTO attendance (SESS_ID, STUD_ID, CLSS_ID, ATTND_DUR)
+                     VALUES (?, ?, ?, ?)";
 
-          $inputs = array($SessionID, $StudentID, $ClassID);
+          $inputs = array($SessionID, $StudentID, $ClassID, $Duration);
           $query = $this->db->query($strSQL, $inputs);
 
         }
