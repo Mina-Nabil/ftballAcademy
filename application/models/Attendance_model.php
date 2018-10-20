@@ -127,7 +127,7 @@ class Attendance_model extends CI_Model{
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
           //Return number of minutes
-          $strSQL = "SELECT TIME_FORMAT(SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE))), '%H:%i:%s') as totalDuration
+          $strSQL = "SELECT TIME_FORMAT(SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)))), '%H:%i:%s') as totalDuration
                      FROM sessions, classes, students, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
