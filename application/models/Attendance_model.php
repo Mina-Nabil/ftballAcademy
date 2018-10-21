@@ -65,7 +65,7 @@ class Attendance_model extends CI_Model{
                      AND sessions.SESS_ID = attendance.SESS_ID
                      AND STUD_BARCODE = ?
                      AND DATE_ADD(NOW(), INTERVAL 2 hour) <  DATE_ADD(SESS_END_DATE, INTERVAL 10 hour)
-                     AND DATE_ADD(NOW(), INTERVAL 2 hour) > DATE_SUB(SESS_STRT_DATE, INTERVAL 3 hour)
+                     AND DATE_ADD(NOW(), INTERVAL 2 hour) > DATE_SUB(SESS_STRT_DATE, INTERVAL 5 hour)
                      AND ATTND = 0";
 
           $inputs = array($StudentBarcode);
