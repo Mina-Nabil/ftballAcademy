@@ -52,7 +52,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 //Students API
 $route['Api/getStudents'] = 'Students/getAllStudents';
+$route['Api/getUnsubscribers'] = 'Students/getUnsubscribers';
 $route['Api/getStudents/(:num)'] = 'Students/getStudents/$1';
+$route['Api/playersubscribe/(:num)'] = 'Students/playersubscribe/$1';
+$route['Api/activatePlayer/(:num)'] = 'Students/activatePlayer/$1';
+$route['Api/deactivatePlayer/(:num)'] = 'Students/deactivatePlayer/$1';
 $route['Api/getStudent/(:num)'] = 'Students/getStudent/$1';
 $route['Api/addStudent']          = 'Students/addStudent';
 $route['Api/editStudent/(:num)'] = 'Students/editStudent/$1';

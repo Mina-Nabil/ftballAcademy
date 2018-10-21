@@ -27,8 +27,8 @@ class Classes_model extends CI_Model{
 
         }
 
-        public function getStudentIDs($ClassIDs){
-          $strSQL = "SELECT STUD_ID FROM students WHERE STUD_CLSS_ID = ?";
+        public function getStudentIDsforAttendance($ClassIDs){
+          $strSQL = "SELECT STUD_ID FROM students WHERE STUD_CLSS_ID = ? AND STUD_ACTV = 1";
           $query = $this->db->query($strSQL, array($ClassIDs));
           return $query->result_array();
         }

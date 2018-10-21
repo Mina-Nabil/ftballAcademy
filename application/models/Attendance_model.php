@@ -78,7 +78,7 @@ class Attendance_model extends CI_Model{
         }
 
         public function createAttendanceList($SessionID, $ClassID){
-          $studentsIDs = $this->Classes_model->getStudentIDs($ClassID);
+          $studentsIDs = $this->Classes_model->getStudentIDsforAttendance($ClassID);
           foreach($studentsIDs as $ID){
             $this->insertAttendance($SessionID, $ID['STUD_ID'], $ClassID, $this->getSessionDuration($SessionID));
           }

@@ -31,6 +31,22 @@
       }
     }
 
+    public function getUnsubscribers(){
+      echo json_encode($this->Students_model->getUnsubscribers(), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function playersubscribe($StudentID){
+      echo json_encode($this->Students_model->paySubsctiption($StudentID), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function activatePlayer($StudentID){
+      echo json_encode($this->Students_model->activateStudent($StudentID), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function deactivatePlayer($StudentID){
+      echo json_encode($this->Students_model->deactivateStudent($StudentID), JSON_UNESCAPED_UNICODE);      
+    }
+
     public function addStudent($key=''){
       if($this->permitApiCall($key)){
         $data = json_decode(file_get_contents('php://input'), true);
