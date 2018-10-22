@@ -48,8 +48,8 @@ class Attendance_model extends CI_Model{
                         FROM sessions WHERE SESS_ID = ?";
           $query      = $this->db->query($strSQL, array($SessID));
           $Session    = $query->result_array()[0];
-          $Start      = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_STRT_DATE'], new DateTimeZone('Africa/Cairo'));
-          $End        = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_END_DATE'], new DateTimeZone('Africa/Cairo'));
+          $Start      = DateTime::createFromFormat('Y-m-d H:i:s', $Session['SESS_STRT_DATE'], new DateTimeZone('Africa/Cairo'));
+          $End        = DateTime::createFromFormat('Y-m-d H:i:s', $Session['SESS_END_DATE'], new DateTimeZone('Africa/Cairo'));
 
           return $Start->diff($End)->format('%H:%i:%s');
         }
