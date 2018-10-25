@@ -108,7 +108,11 @@ class Attendance_model extends CI_Model{
           $StartDate = new DateTime("{$ThisYear}-{$Month}-01");
 
           $NextMonth = $Month + 1;
-          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
+          if($NextMonth==13){
+            $NextMonth=12;
+            $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-31");
+          } else
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-1");
 
           $strSQL = "SELECT TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s') as totalDuration FROM attendance
                      WHERE STUD_ID = ?
@@ -124,7 +128,11 @@ class Attendance_model extends CI_Model{
           $StartDate = new DateTime("{$ThisYear}-{$Month}-01");
 
           $NextMonth = $Month + 1;
-          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
+          if($NextMonth==13){
+            $NextMonth=12;
+            $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-31");
+          } else
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-1");
 
           //Return number of minutes
           $strSQL = "SELECT TIME_FORMAT(SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)))), '%H:%i:%s') as totalDuration
@@ -198,7 +206,11 @@ class Attendance_model extends CI_Model{
           $StartDate = new DateTime("{$ThisYear}-{$Month}-22");
 
           $NextMonth = $Month+1;
-          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
+          if($NextMonth==13){
+            $NextMonth=12;
+            $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-31");
+          } else
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-1");
 
           $strSQL = "SELECT TRUNCATE(SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE))) / 3600, 1) as totalDuration
                      FROM sessions, classes, students, session_class
@@ -262,7 +274,11 @@ class Attendance_model extends CI_Model{
           $StartDate = new DateTime("{$ThisYear}-{$Month}-22");
 
           $NextMonth = $Month + 1;
-          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
+          if($NextMonth==13){
+            $NextMonth=12;
+            $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-31");
+          } else
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-1");
 
           $strSQL = "SELECT TRUNCATE(SUM(TIME_TO_SEC(ATTND_DUR)) / 3600, 1 ) as totalDuration  FROM attendance
                      WHERE STUD_ID = ?
