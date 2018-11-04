@@ -105,7 +105,7 @@ class Students_model extends CI_Model{
         }
 
         public function getUnsubscribers(){
-          $strSQL   =  "SELECT period_diff(date_format(now(), '%Y%m'), date_format(STUD_SINCE, '%Y%m')) as Months - STUD_PAID, STUD_NAME, STUD_CSID, STUD_ID 
+          $strSQL   =  "SELECT period_diff(date_format(now(), '%Y%m') - STUD_PAID, date_format(STUD_SINCE, '%Y%m')) as Months , STUD_NAME, STUD_CSID, STUD_ID 
                         FROM students
                         WHERE period_diff(date_format(now(), '%Y%m'), date_format(STUD_SINCE, '%Y%m')) > STUD_PAID
                         AND STUD_ACTV = 1";
