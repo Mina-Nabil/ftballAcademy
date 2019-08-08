@@ -56,7 +56,7 @@ class Sessions_model extends CI_Model{
                       ORDER BY sessions.SESS_ID ";
           $query = $this->db->query($strSQL, array($classID, $threeMonthAgo->format('Y-m-d')));
           $res = $query->result_array();
-
+          return $res;
 
         }
 
