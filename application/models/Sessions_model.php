@@ -47,16 +47,30 @@ class Sessions_model extends CI_Model{
           $threeMonthAgo = new DateTime("now");
           $threeMonthAgo->sub(date_interval_create_from_date_string("3 months"));
 
-          $strSQL = "SELECT STUD_NAME, ATTND, sessions.SESS_ID FROM sessions, attendance, students
+          $strSQL = "SELECT studens.STUD_ID, STUD_NAME, ATTND, sessions.SESS_ID FROM sessions, attendance, students
                       WHERE sessions.SESS_ID = attendance.SESS_ID
                       AND   students.STUD_ID = attendance.STUD_ID
                       AND   attendance.CLSS_ID = ?
                       AND   sessions.SESS_STRT_DATE > ?
                       AND   sessions.SESS_STRT_DATE < NOW()
-                      ORDER BY sessions.SESS_ID ";
+                      ORDER BY students.STUD_NAME ASC, sessions.SESS_ID DESC";
           $query = $this->db->query($strSQL, array($classID, $threeMonthAgo->format('Y-m-d')));
           $res = $query->result_array();
-          return $res;
+
+
+          $ret = array();
+          foreach($res as $row){
+            if(!array_key_exists($row, $row['STUD_ID']))
+              $ret[$row['STUD_ID']] = [
+                'Session ID' => $row['SESS_ID'],
+                'Student Name' => $row['STUD_NAME'],
+                'Att' . $row['SESS_ID'] => ($row['ATTND'])? 'Yes' : 'No'
+
+              ];
+            else
+              array_unshift($ret[$row['STUD_ID']], ['Att' . $row['SESS_ID'] => ($row['ATTND'])? 'Yes' : 'No']);
+          }
+          return $ret;
 
         }
 
