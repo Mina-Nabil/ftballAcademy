@@ -51,8 +51,7 @@ class Sessions_model extends CI_Model{
                       WHERE sessions.SESS_ID = attendance.SESS_ID
                       AND   students.STUD_ID = attendance.STUD_ID
                       AND   attendance.CLSS_ID = ?
-                      AND   sessions.SESS_STRT_DATE > ?
-                      AND   sessions.SESS_STRT_DATE < NOW()
+                      AND   sessions.SESS_STRT_DATE BETWEEN ? AND NOW()
                       ORDER BY students.STUD_NAME ASC, sessions.SESS_ID DESC";
           $query = $this->db->query($strSQL, array($classID, $threeMonthAgo->format('Y-m-d')));
           $res = $query->result_array();
@@ -68,7 +67,7 @@ class Sessions_model extends CI_Model{
 
               ];
             else
-              array_unshift($ret[$row['STUD_ID']], ['Att' . $row['SESS_ID'] => ($row['ATTND'])? 'Yes' : 'No']);
+              array_push($ret[$row['STUD_ID']], ['Att' . $row['SESS_ID'] => ($row['ATTND'])? 'Yes' : 'No']);
           }
           return $ret;
 
