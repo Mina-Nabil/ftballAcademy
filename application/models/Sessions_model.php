@@ -60,7 +60,7 @@ class Sessions_model extends CI_Model{
 
           $ret = array();
           foreach($res as $row){
-            if(!array_key_exists($row, $row['STUD_ID']))
+            if(!array_key_exists($row['STUD_ID'], $row))
               $ret[$row['STUD_ID']] = [
                 'Session ID' => $row['SESS_ID'],
                 'Student Name' => $row['STUD_NAME'],
