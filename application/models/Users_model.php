@@ -12,14 +12,14 @@ class Users_model extends CI_Model{
         public function getUsers(){
 
           $strSQL = "SELECT USER_ID, USER_UNAME, USER_PASS, USER_FNAME, USER_TEL
-                      FROM Users";
+                      FROM users";
           $query = $this->db->query($strSQL);
           return $query->result_array();
 
         }
 
         public function login($Name, $Pass){
-          $strSQL = "SELECT USER_ID FROM Users
+          $strSQL = "SELECT USER_ID FROM users
                      WHERE USER_UNAME = ?
                      AND   USER_PASS  = ?";
           $query = $this->db->query($strSQL, array($Name, $Pass));
@@ -31,7 +31,7 @@ class Users_model extends CI_Model{
         public function getUser_byID($ID){
 
           $strSQL = "SELECT USER_ID, USER_UNAME, USER_PASS, USER_FNAME, USER_TEL
-                    FROM Users WHERE USER_ID = {$ID}";
+                    FROM users WHERE USER_ID = {$ID}";
           $query = $this->db->query($strSQL);
           return $query->result_array();
 
@@ -40,7 +40,7 @@ class Users_model extends CI_Model{
 
         public function insertUsers($UName, $Pass, $FName, $Tel){
             //NN Text ArabicUName UName DistrictID
-          $strSQL = "INSERT INTO Users (USER_UNAME, USER_PASS, USER_FNAME, USER_TEL)
+          $strSQL = "INSERT INTO users (USER_UNAME, USER_PASS, USER_FNAME, USER_TEL)
                      VALUES (?, ?, ?, ?)";
 
           $inputs = array($UName, $Pass, $FName, $Tel);
@@ -50,7 +50,7 @@ class Users_model extends CI_Model{
 
         public function editUsers($ID, $UName, $Pass, $FName, $Tel){
             //NN Text ArabicUName UName DistrictID
-          $strSQL = "UPDATE Users
+          $strSQL = "UPDATE users
                     SET USER_UNAME   = ?,
                         USER_PASS    = ?,
                         USER_FNAME   = ?,
@@ -63,7 +63,7 @@ class Users_model extends CI_Model{
         }
 
         public function deleteUsers($ID){
-          $strSQL = "DELETE FROM Users WHERE USER_ID = {$ID}";
+          $strSQL = "DELETE FROM users WHERE USER_ID = {$ID}";
           $query = $this->db->query($strSQL);
         }
 

@@ -11,6 +11,10 @@
       parent::__construct();
 
     }
+//Continue array here
+    public function getAttendance($sessionID, $classID){
+      echo json_encode($this->Sessions_model->getClassAttendance($sessionID, $classID), JSON_UNESCAPED_UNICODE);
+    }
 
     public function getAllSessions($key=''){
       if($this->permitApiCall($key)){
