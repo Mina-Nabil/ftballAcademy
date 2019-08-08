@@ -47,7 +47,7 @@ class Sessions_model extends CI_Model{
           $threeMonthAgo = new DateTime("now");
           $threeMonthAgo->sub(date_interval_create_from_date_string("3 months"));
 
-          $strSQL = "SELECT studens.STUD_ID, STUD_NAME, ATTND, sessions.SESS_ID FROM sessions, attendance, students
+          $strSQL = "SELECT students.STUD_ID, STUD_NAME, ATTND, sessions.SESS_ID FROM sessions, attendance, students
                       WHERE sessions.SESS_ID = attendance.SESS_ID
                       AND   students.STUD_ID = attendance.STUD_ID
                       AND   attendance.CLSS_ID = ?
