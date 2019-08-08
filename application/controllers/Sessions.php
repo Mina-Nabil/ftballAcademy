@@ -13,6 +13,10 @@
     }
 //Continue array here
 
+    public function getAttendanceList($SessID){
+      echo json_encode($this->Attendance_model->getAttendance_bySession($SessID), JSON_UNESCAPED_UNICODE);
+    }
+
     public function getAllSessions($key=''){
       if($this->permitApiCall($key)){
         echo json_encode($this->Sessions_model->getSessions(), JSON_UNESCAPED_UNICODE);
@@ -88,6 +92,20 @@
        else
        die("Invalid Arguments");
 
+      }
+
+      public function TakeAttendancefromTable($SessID, $StudentID){
+        $this->Attendance_model->editAttendance_CheckOnly($SessID, $StudentID, 1);
+        $this->getAttendanceList($SessID);
+      }
+
+      public function CancelAttendancefromTable($SessID, $StudentID){
+        $this->Attendance_model->editAttendance_CheckOnly($SessID, $StudentID, 0);
+        $this->getAttendanceList($SessID);
+      }
+
+      public function deleteSession($SessID){
+        echo $this->Sessions_model->deleteSession($SessID);
       }
 
 

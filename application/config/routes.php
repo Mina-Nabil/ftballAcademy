@@ -52,7 +52,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 //Students API
 $route['Api/getStudents'] = 'Students/getAllStudents';
+$route['Api/getUnsubscribers'] = 'Students/getUnsubscribers';
 $route['Api/getStudents/(:num)'] = 'Students/getStudents/$1';
+$route['Api/playersubscribe/(:num)'] = 'Students/playersubscribe/$1';
+$route['Api/activatePlayer/(:num)'] = 'Students/activatePlayer/$1';
+$route['Api/deactivatePlayer/(:num)'] = 'Students/deactivatePlayer/$1';
 $route['Api/getStudent/(:num)'] = 'Students/getStudent/$1';
 $route['Api/addStudent']          = 'Students/addStudent';
 $route['Api/editStudent/(:num)'] = 'Students/editStudent/$1';
@@ -86,6 +90,12 @@ $route['Api/takeAttendance/(:any)'] = 'Sessions/takeAttendance/$1';
 $route['Api/getSession_limit/(:num)'] = 'Sessions/getSession_CalendarEvent/$1';
 $route['Api/addSession']          = 'Sessions/addSession';
 $route['Api/editSession/(:num)'] = 'Sessions/editSession/$1';
+$route['Api/deleteSession/(:num)'] = 'Sessions/deleteSession/$1';
+
+//Attendance List
+$route['Api/getattendancelist/(:num)'] = 'Sessions/getAttendanceList/$1';
+$route['Api/setattendancetrue/(:num)/(:num)'] = 'Sessions/TakeAttendancefromTable/$1/$2';
+$route['Api/setattendancefalse/(:num)/(:num)'] = 'Sessions/CancelAttendancefromTable/$1/$2';
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
