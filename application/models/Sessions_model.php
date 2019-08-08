@@ -42,10 +42,32 @@ class Sessions_model extends CI_Model{
           return $query->result_array();
         }
 
+        private function getSessionsForAttendance($classID){
+
+          $threeMonthAgo = new DateTime("now");
+          $threeMonthAgo->sub(date_interval_create_from_date_string("3 months"));
+
+          $strSQL = "SELECT SESS_ID, SESS_STRT_DATE
+
+                      FROM session_class, classes, sessions, users
+                      WHERE
+                           SSCL_SESS_ID = SESS_ID
+                      AND  SESS_USER_ID = USER_ID
+                      AND  SSCL_CLSS_ID = CLSS_ID
+                      AND  SSCL_CLSS_ID = ?
+                      AND  sessions.SESS_STRT_DATE BETWEEN ? AND NOW()
+                      ORDER BY sessions.SESS_ID DESC";
+          $query = $this->db->query($strSQL, array($classID, $threeMonthAgo->format('Y-m-d')) );
+          return $query->result_array();
+
+        }
+
         public function getClassAttendance($classID){
 
           $threeMonthAgo = new DateTime("now");
           $threeMonthAgo->sub(date_interval_create_from_date_string("3 months"));
+
+          $sessions = $this->getSessionsForAttendance($classID);
 
           $strSQL = "SELECT students.STUD_ID, STUD_NAME, ATTND, sessions.SESS_ID FROM sessions, attendance, students
                       WHERE sessions.SESS_ID = attendance.SESS_ID
@@ -57,17 +79,20 @@ class Sessions_model extends CI_Model{
           $res = $query->result_array();
 
 
+
           $ret = array();
           foreach($res as $row){
-            if(!array_key_exists($row['STUD_ID'], $ret))
-              $ret[$row['STUD_ID']] = [
-                'Session ID' => $row['SESS_ID'],
-                'Student Name' => $row['STUD_NAME'],
-                'Att' . $row['SESS_ID'] => ($row['ATTND'])? 'Yes' : 'No'
+            if(!array_key_exists($row['STUD_ID'], $ret)) {
+              $ret[$row['STUD_ID']] = ['Student Name' => $row['STUD_NAME']];
 
-              ];
+              foreach($sessions as $sess) $ret[$row['STUD_ID']] += [$sess['SESS_ID'] => 'No'];
+
+              $ret[$row['STUD_ID']][$row['SESS_ID']] = ($row['ATTND'])? 'Yes' : 'No';
+            }
+
             else
-            $ret[$row['STUD_ID']] += ['Att' . $row['SESS_ID'] => ($row['ATTND']) ? 'Yes' : 'No'];
+              $ret[$row['STUD_ID']][$row['SESS_ID']] = ($row['ATTND'])? 'Yes' : 'No';
+            //$ret[$row['STUD_ID']] += [ $row['SESS_ID'] => ($row['ATTND']) ? 'Yes' : 'No'];
               //array_push($ret[$row['STUD_ID']], ['Att' . $row['SESS_ID'] => ($row['ATTND'])? 'Yes' : 'No']);
           }
           return $ret;
