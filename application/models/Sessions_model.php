@@ -42,7 +42,7 @@ class Sessions_model extends CI_Model{
           return $query->result_array();
         }
 
-        public function getAttendance($classID){
+        public function getClassAttendance($classID){
 
           $threeMonthAgo = new DateTime("now");
           $threeMonthAgo->sub("3 months");
