@@ -12,7 +12,7 @@ class Attendance_model extends CI_Model{
 
         public function getAttendance_bySession($ID){
 
-          $strSQL = "SELECT SESS_ID, STUD_ID, CLSS_ID, ATTND, SESS_NAME, CLSS_NME, CLSS_YEAR, STUD_NAME, ATTND_TIME, ATTND_DUR
+          $strSQL = "SELECT sessions.SESS_ID, students.STUD_ID, classes.CLSS_ID, ATTND, SESS_DESC, CLSS_NME, CLSS_YEAR, STUD_NAME, ATTND_TIME, ATTND_DUR
                     FROM attendance, students, classes, sessions
                     WHERE
                         attendance.CLSS_ID = classes.CLSS_ID
@@ -33,19 +33,25 @@ class Attendance_model extends CI_Model{
             $Start = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_STRT_DATE'], new DateTimeZone('Africa/Cairo'));
             $End = DateTime::createFromFormat('Y-m-d H:i:s', $Session['class']['SESS_END_DATE'], new DateTimeZone('Africa/Cairo'));
 
-            $Dur2 = $Date->diff($End);
             $Dur1 = $Start->diff($End);
 
-            if($Date->format('u') < $Start->format('u')) {
+            $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur1->format('%H:%i:%s'));
 
-              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur1->format('%H:%i:%s'));
-            }else {
-              $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur2->format('%H:%i:%s'));
-            }
             return array('result' => 1);
           }
 
 
+        }
+
+        private function getSessionDuration($SessID){
+          $strSQL     = "SELECT sessions.SESS_ID, SESS_STRT_DATE, SESS_END_DATE
+                        FROM sessions WHERE SESS_ID = ?";
+          $query      = $this->db->query($strSQL, array($SessID));
+          $Session    = $query->result_array()[0];
+          $Start      = DateTime::createFromFormat('Y-m-d H:i:s', $Session['SESS_STRT_DATE'], new DateTimeZone('Africa/Cairo'));
+          $End        = DateTime::createFromFormat('Y-m-d H:i:s', $Session['SESS_END_DATE'], new DateTimeZone('Africa/Cairo'));
+
+          return $Start->diff($End)->format('%H:%i:%s');
         }
 
         private function getCurrentSession($StudentBarcode){
@@ -58,23 +64,23 @@ class Attendance_model extends CI_Model{
                      AND students.STUD_ID = attendance.STUD_ID
                      AND sessions.SESS_ID = attendance.SESS_ID
                      AND STUD_BARCODE = ?
-                     AND DATE_ADD(NOW(), INTERVAL 2 hour) < SESS_END_DATE
-                     AND DATE_ADD(NOW(), INTERVAL 2 hour) > DATE_SUB(SESS_STRT_DATE, INTERVAL 1 hour)
+                     AND DATE_ADD(NOW(), INTERVAL 2 hour) <  DATE_ADD(SESS_END_DATE, INTERVAL 10 hour)
+                     AND DATE_ADD(NOW(), INTERVAL 2 hour) > DATE_SUB(SESS_STRT_DATE, INTERVAL 5 hour)
                      AND ATTND = 0";
 
           $inputs = array($StudentBarcode);
           $query = $this->db->query($strSQL, $inputs);
           $res = $query->result_array();
-          if(count($res) > 1) return array('res' => 2);
-          else if(count($res) == 1)return array('res' => 1, 'class' => $res[0]);
+          if(count($res) > 1) return array('res' => 2); //More than one session
+          else if(count($res) == 1)return array('res' => 1, 'class' => $res[0]); // no sessions
           else return array('res' => 0);
 
         }
 
         public function createAttendanceList($SessionID, $ClassID){
-          $studentsIDs = $this->Classes_model->getStudentIDs($ClassID);
+          $studentsIDs = $this->Classes_model->getStudentIDsforAttendance($ClassID);
           foreach($studentsIDs as $ID){
-            $this->insertAttendance($SessionID, $ID['STUD_ID'], $ClassID);
+            $this->insertAttendance($SessionID, $ID['STUD_ID'], $ClassID, $this->getSessionDuration($SessionID));
           }
         }
 
@@ -102,12 +108,17 @@ class Attendance_model extends CI_Model{
           $StartDate = new DateTime("{$ThisYear}-{$Month}-01");
 
           $NextMonth = $Month + 1;
-          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
+          if($NextMonth==13){
+            $NextMonth=12;
+            $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-31");
+          } else
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-1");
 
           $strSQL = "SELECT TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s') as totalDuration FROM attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -117,10 +128,14 @@ class Attendance_model extends CI_Model{
           $StartDate = new DateTime("{$ThisYear}-{$Month}-01");
 
           $NextMonth = $Month + 1;
-          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
+          if($NextMonth==13){
+            $NextMonth=12;
+            $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-31");
+          } else
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-1");
 
           //Return number of minutes
-          $strSQL = "SELECT TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s') as totalDuration
+          $strSQL = "SELECT TIME_FORMAT(SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)))), '%H:%i:%s') as totalDuration
                      FROM sessions, classes, students, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
@@ -138,7 +153,7 @@ class Attendance_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
+          $strSQL = "SELECT TRUNCATE(SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE))) / 3600, 1) as totalDuration
                      FROM sessions, classes, students, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
@@ -156,7 +171,7 @@ class Attendance_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
+          $strSQL = "SELECT TRUNCATE(SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE))) / 3600, 1) as totalDuration
                      FROM sessions, classes, students, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
@@ -174,7 +189,7 @@ class Attendance_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-21");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
+          $strSQL = "SELECT TRUNCATE(SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE))) / 3600, 1) as totalDuration
                      FROM sessions, classes, students, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
@@ -191,9 +206,13 @@ class Attendance_model extends CI_Model{
           $StartDate = new DateTime("{$ThisYear}-{$Month}-22");
 
           $NextMonth = $Month+1;
-          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
+          if($NextMonth==13){
+            $NextMonth=12;
+            $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-31");
+          } else
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-1");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
+          $strSQL = "SELECT TRUNCATE(SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE))) / 3600, 1) as totalDuration
                      FROM sessions, classes, students, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
@@ -211,10 +230,11 @@ class Attendance_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
+          $strSQL = "SELECT TRUNCATE(SUM(TIME_TO_SEC(ATTND_DUR)) / 3600, 1 ) as totalDuration  FROM attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -225,10 +245,11 @@ class Attendance_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
+          $strSQL = "SELECT TRUNCATE(SUM(TIME_TO_SEC(ATTND_DUR)) / 3600, 1 ) as totalDuration  FROM attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -239,10 +260,11 @@ class Attendance_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-21");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
+          $strSQL = "SELECT TRUNCATE(SUM(TIME_TO_SEC(ATTND_DUR)) / 3600, 1 ) as totalDuration  FROM attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -252,23 +274,28 @@ class Attendance_model extends CI_Model{
           $StartDate = new DateTime("{$ThisYear}-{$Month}-22");
 
           $NextMonth = $Month + 1;
-          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
+          if($NextMonth==13){
+            $NextMonth=12;
+            $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-31");
+          } else
+          $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-1");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(SUM(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
+          $strSQL = "SELECT TRUNCATE(SUM(TIME_TO_SEC(ATTND_DUR)) / 3600, 1 ) as totalDuration  FROM attendance
                      WHERE STUD_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
 
           $query = $this->db->query($strSQL, array($StudentID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
 
-        public function insertAttendance($SessionID, $StudentID, $ClassID){
+        public function insertAttendance($SessionID, $StudentID, $ClassID, $Duration){
             //NN Text ArabicSDate SDate DistrictID
-          $strSQL = "INSERT INTO attendance (SESS_ID, STUD_ID, CLSS_ID)
-                     VALUES (?, ?, ?)";
+          $strSQL = "INSERT INTO attendance (SESS_ID, STUD_ID, CLSS_ID, ATTND_DUR)
+                     VALUES (?, ?, ?, ?)";
 
-          $inputs = array($SessionID, $StudentID, $ClassID);
+          $inputs = array($SessionID, $StudentID, $ClassID, $Duration);
           $query = $this->db->query($strSQL, $inputs);
 
         }
@@ -283,6 +310,17 @@ class Attendance_model extends CI_Model{
                         SESS_ID    = ?
                     AND STUD_ID   =  ?";
           $inputs = array($Attended, $Duration, $Time, $SessionID, $StudentID);
+          $query = $this->db->query($strSQL, $inputs);
+
+        }
+        public function editAttendance_CheckOnly($SessionID, $StudentID, $Attended){
+            //NN Text ArabicSDate SDate DistrictID
+          $strSQL = "UPDATE attendance
+                    SET ATTND        = ?
+                    WHERE
+                        SESS_ID    = ?
+                    AND STUD_ID   =  ?";
+          $inputs = array($Attended, $SessionID, $StudentID);
           $query = $this->db->query($strSQL, $inputs);
 
         }

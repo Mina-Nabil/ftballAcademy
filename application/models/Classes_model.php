@@ -27,8 +27,8 @@ class Classes_model extends CI_Model{
 
         }
 
-        public function getStudentIDs($ClassIDs){
-          $strSQL = "SELECT STUD_ID FROM students WHERE STUD_CLSS_ID = ?";
+        public function getStudentIDsforAttendance($ClassIDs){
+          $strSQL = "SELECT STUD_ID FROM students WHERE STUD_CLSS_ID = ? AND STUD_ACTV = 1";
           $query = $this->db->query($strSQL, array($ClassIDs));
           return $query->result_array();
         }
@@ -60,10 +60,11 @@ class Classes_model extends CI_Model{
           $NextMonth = $Month + 1;
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
-          $strSQL = "SELECT TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s') as totalDuration FROM attendance
+          $strSQL = "SELECT TIME_FORMAT(SEC_TO_TIME(AVG(TIME_TO_SEC(ATTND_DUR))), '%H:%i:%s' ) as totalDuration FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           $res = $query->result_array()[0]['totalDuration'];
           if(is_null($res)) $res = '00:00:00';
@@ -78,7 +79,7 @@ class Classes_model extends CI_Model{
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
           //Return number of minutes
-          $strSQL = "SELECT CLSS_ID,TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s') as totalDuration
+          $strSQL = "SELECT CLSS_ID,TIME_FORMAT(SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)))), '%H:%i:%s') as totalDuration
                      FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
@@ -98,7 +99,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
 
-          $strSQL = "SELECT CLSS_ID,TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
+          $strSQL = "SELECT CLSS_ID,SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE))) / 3600 as totalDuration
                      FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
@@ -116,7 +117,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
 
-          $strSQL = "SELECT CLSS_ID,TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
+          $strSQL = "SELECT CLSS_ID,SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE))) / 3600 as totalDuration
                      FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
@@ -134,7 +135,7 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-21");
 
-          $strSQL = "SELECT CLSS_ID,TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
+          $strSQL = "SELECT CLSS_ID,SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE))) / 3600 as totalDuration
                      FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
@@ -153,7 +154,7 @@ class Classes_model extends CI_Model{
           $NextMonth = $Month+1;
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
-          $strSQL = "SELECT CLSS_ID, TIME_TO_SEC(TIME_FORMAT(SUM(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE)), '%H:%i:%s')) / 60 as totalDuration
+          $strSQL = "SELECT CLSS_ID, SUM(TIME_TO_SEC(TIMEDIFF(SESS_END_DATE, SESS_STRT_DATE))) / 3600 as totalDuration
                      FROM sessions, classes, session_class
                      WHERE SESS_ID = SSCL_SESS_ID
                      AND CLSS_ID = SSCL_CLSS_ID
@@ -170,11 +171,12 @@ class Classes_model extends CI_Model{
           $StartDate = new DateTime("{$ThisYear}-{$Month}-01");
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-07");
-
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
+          //SELECT SEC_TO_TIME(AVG(TIME_TO_SEC(ATTND_DUR))) / 3600 as totalDuration FROM attendance WHERE CLSS_ID = 6 AND ATTND = 1
+          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600, 1) as totalDuration  FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -185,10 +187,11 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-14");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
-                     WHERE STUD_ID = ?
+          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600, 1) as totalDuration  FROM attendance
+                     WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -199,10 +202,11 @@ class Classes_model extends CI_Model{
 
           $EndDate = new DateTime("{$ThisYear}-{$Month}-21");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
+          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600, 1) as totalDuration  FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];
         }
@@ -214,10 +218,11 @@ class Classes_model extends CI_Model{
           $NextMonth = $Month + 1;
           $EndDate = new DateTime("{$ThisYear}-{$NextMonth}-01");
 
-          $strSQL = "SELECT TIME_TO_SEC(TIME_FORMAT(AVG(ATTND_DUR), '%H:%i:%s')) / 60 as totalDuration FROM attendance
+          $strSQL = "SELECT TRUNCATE(AVG(TIME_TO_SEC(ATTND_DUR)) / 3600, 1) as totalDuration  FROM attendance
                      WHERE CLSS_ID = ?
                      AND ATTND_TIME < ?
-                     AND ATTND_TIME > ?";
+                     AND ATTND_TIME > ?
+                     AND ATTND = 1";
 
           $query = $this->db->query($strSQL, array($ClassID, $EndDate->format('Y-m-d H:i:s'), $StartDate->format('Y-m-d H:i:s')));
           return $query->result_array()[0]['totalDuration'];

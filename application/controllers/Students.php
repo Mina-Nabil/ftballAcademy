@@ -31,6 +31,22 @@
       }
     }
 
+    public function getUnsubscribers(){
+      echo json_encode($this->Students_model->getUnsubscribers(), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function playersubscribe($StudentID){
+      echo json_encode($this->Students_model->paySubsctiption($StudentID), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function activatePlayer($StudentID){
+      echo json_encode($this->Students_model->activateStudent($StudentID), JSON_UNESCAPED_UNICODE);
+    }
+
+    public function deactivatePlayer($StudentID){
+      echo json_encode($this->Students_model->deactivateStudent($StudentID), JSON_UNESCAPED_UNICODE);      
+    }
+
     public function addStudent($key=''){
       if($this->permitApiCall($key)){
         $data = json_decode(file_get_contents('php://input'), true);
@@ -49,10 +65,11 @@
         $PrevClub  = $data['STUD_PREV_CLUB'];
         $AccessCode  = $data['STUD_ACCS_CODE'];
         $Barcode  = $data['STUD_BARCODE'];
+        $CSID  = $data['STUD_CSID'];
         $Since  = date("Y-m-d");
       }
       if($Name !== null && $BirthD !==null && $ParentTel!==null)
-      echo json_encode($this->Students_model->insertStudent($Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Height, $AccessCode, $Barcode, $Since), JSON_UNESCAPED_UNICODE);
+      echo json_encode($this->Students_model->insertStudent($Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $Weight, $Height, $AccessCode, $Barcode, $Since, $CSID), JSON_UNESCAPED_UNICODE);
       else
       die("Invalid Arguments");
 
@@ -76,9 +93,10 @@
         $PrevClub  = $data['STUD_PREV_CLUB'];
         $AccessCode  = $data['STUD_ACCS_CODE'];
         $Barcode  = $data['STUD_BARCODE'];
+        $CSID  = $data['STUD_CSID'];
       }
       if($Name !== null && $BirthD !==null && $ParentTel!==null)
-      echo json_encode($this->Students_model->editStudent($StudentID, $Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $AccessCode, $Barcode, $Weight, $Height), JSON_UNESCAPED_UNICODE);
+      echo json_encode($this->Students_model->editStudent($StudentID, $Name, $Tel, $BirthD, $ParentTel, $ClassID, $ParentTel2, $ParentName, $MentorName, $PrevClub, $FavPos, $AccessCode, $Barcode, $Weight, $Height, $CSID), JSON_UNESCAPED_UNICODE);
       else
       die("Invalid Arguments");
 
