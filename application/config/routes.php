@@ -64,6 +64,7 @@ $route['Api/getClass/(:num)']        = 'Classes/getClass_byID/$1';
 $route['Api/editClass/(:num)']        = 'Classes/editClass/$1';
 $route['Api/getClassesRoutes']  = 'Classes/getRoutes';
 $route['Api/addClass']          = 'Classes/addClass';
+$route['Api/getAttendance/(:num)']        = 'Classes/editClass/$1';
 
 //Positions API
 $route['Api/getPositions']        = 'Positions/getPositions';

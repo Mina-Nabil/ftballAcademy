@@ -25,6 +25,10 @@
       }
     }
 
+    public function getAttendance($classID){
+      echo json_encode($this->Sessions_model->getClassAttendance($classID), JSON_UNESCAPED_UNICODE);
+    }
+
     public function getClass_byID($classID, $key=''){
       if($this->permitApiCall($key)){
         echo json_encode($this->Classes_model->getClass_byID($classID)[0], JSON_UNESCAPED_UNICODE);
