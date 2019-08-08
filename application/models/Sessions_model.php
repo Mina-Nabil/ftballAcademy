@@ -45,7 +45,7 @@ class Sessions_model extends CI_Model{
         public function getClassAttendance($classID){
 
           $threeMonthAgo = new DateTime("now");
-          $threeMonthAgo->sub(date_interval_create_from_date_string("9 months"));
+          $threeMonthAgo->sub(date_interval_create_from_date_string("3 months"));
 
           $strSQL = "SELECT students.STUD_ID, STUD_NAME, ATTND, sessions.SESS_ID FROM sessions, attendance, students
                       WHERE sessions.SESS_ID = attendance.SESS_ID
