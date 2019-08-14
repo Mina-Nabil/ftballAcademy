@@ -95,7 +95,12 @@ class Sessions_model extends CI_Model{
             //$ret[$row['STUD_ID']] += [ $row['SESS_ID'] => ($row['ATTND']) ? 'Yes' : 'No'];
               //array_push($ret[$row['STUD_ID']], ['Att' . $row['SESS_ID'] => ($row['ATTND'])? 'Yes' : 'No']);
           }
-          return $ret;
+
+          $ret2 = [];
+          foreach($ret as $student){
+            array_push($ret2 , $student);
+          }
+          return $ret2;
 
         }
 
