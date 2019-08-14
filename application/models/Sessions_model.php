@@ -83,7 +83,7 @@ class Sessions_model extends CI_Model{
           $ret = [];
           foreach($res as $row){
             if(!array_key_exists($row['STUD_ID'], $ret)) {
-              $ret[$row['STUD_ID']] = ['Student Name' => $row['STUD_NAME']];
+              $ret[$row['STUD_ID']] = ['StudentName' => $row['STUD_NAME']];
 
               foreach($sessions as $sess) $ret[$row['STUD_ID']] += [$sess['Name'] => 'No'];
 
@@ -99,8 +99,13 @@ class Sessions_model extends CI_Model{
           $ret2 = [];
           foreach($ret as $student){
             $row2 = [];
-            foreach($student as $value)
-              array_push($row2, $value);
+            $i=1;
+            foreach($student as $key => $value){
+              if(strcmp($key, 'StudentName')==0)
+                $row2['StudentName']=$value;
+              else
+                $row2['session'. $i++]=$value;
+            }
             array_push($ret2 , $row2);
           }
           return $ret2;
