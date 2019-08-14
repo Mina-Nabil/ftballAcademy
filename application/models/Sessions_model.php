@@ -98,7 +98,10 @@ class Sessions_model extends CI_Model{
 
           $ret2 = [];
           foreach($ret as $student){
-            array_push($ret2 , array_values($student));
+            $row2 = [];
+            foreach($student as $value)
+              array_push($row2, $value);
+            array_push($ret2 , $row2);
           }
           return $ret2;
 
