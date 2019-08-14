@@ -69,7 +69,7 @@ class Sessions_model extends CI_Model{
 
           $sessions = $this->getSessionsForAttendance($classID);
 
-          $strSQL = "SELECT students.STUD_ID, STUD_NAME, ATTND, sessions.SESS_ID FROM sessions, attendance, students
+          $strSQL = "SELECT students.STUD_ID, STUD_NAME, ATTND, sessions.SESS_ID, DATE_FORMAT(SESS_STRT_DATE, '%d-%M-%Y') as SESS_STRT_DATE FROM sessions, attendance, students
                       WHERE sessions.SESS_ID = attendance.SESS_ID
                       AND   students.STUD_ID = attendance.STUD_ID
                       AND   attendance.CLSS_ID = ?
@@ -87,11 +87,11 @@ class Sessions_model extends CI_Model{
 
               foreach($sessions as $sess) $ret[$row['STUD_ID']] += [$sess['SESS_ID'] => 'No'];
 
-              $ret[$row['STUD_ID']][$row['SESS_DATE']] = ($row['ATTND'])? 'Yes' : 'No';
+              $ret[$row['STUD_ID']][$row['SESS_STRT_DATE']] = ($row['ATTND'])? 'Yes' : 'No';
             }
 
             else
-              $ret[$row['STUD_ID']][$row['SESS_DATE']] = ($row['ATTND'])? 'Yes' : 'No';
+              $ret[$row['STUD_ID']][$row['SESS_STRT_DATE']] = ($row['ATTND'])? 'Yes' : 'No';
             //$ret[$row['STUD_ID']] += [ $row['SESS_ID'] => ($row['ATTND']) ? 'Yes' : 'No'];
               //array_push($ret[$row['STUD_ID']], ['Att' . $row['SESS_ID'] => ($row['ATTND'])? 'Yes' : 'No']);
           }
