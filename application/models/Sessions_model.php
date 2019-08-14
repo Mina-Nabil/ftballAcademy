@@ -42,12 +42,12 @@ class Sessions_model extends CI_Model{
           return $query->result_array();
         }
 
-        private function getSessionsForAttendance($classID){
+        public function getSessionsForAttendance($classID){
 
           $threeMonthAgo = new DateTime("now");
           $threeMonthAgo->sub(date_interval_create_from_date_string("3 months"));
 
-          $strSQL = "SELECT SESS_ID, SESS_STRT_DATE
+          $strSQL = "SELECT SESS_ID, DATE_FORMAT(SESS_STRT_DATE, '%d-%M-%Y') as Name
 
                       FROM session_class, classes, sessions, users
                       WHERE
