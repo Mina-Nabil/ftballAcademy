@@ -80,18 +80,18 @@ class Sessions_model extends CI_Model{
 
 
 
-          $ret = array();
+          $ret = [];
           foreach($res as $row){
             if(!array_key_exists($row['STUD_ID'], $ret)) {
               $ret[$row['STUD_ID']] = ['Student Name' => $row['STUD_NAME']];
 
               foreach($sessions as $sess) $ret[$row['STUD_ID']] += [$sess['SESS_ID'] => 'No'];
 
-              $ret[$row['STUD_ID']][$row['SESS_ID']] = ($row['ATTND'])? 'Yes' : 'No';
+              $ret[$row['STUD_ID']][$row['SESS_DATE']] = ($row['ATTND'])? 'Yes' : 'No';
             }
 
             else
-              $ret[$row['STUD_ID']][$row['SESS_ID']] = ($row['ATTND'])? 'Yes' : 'No';
+              $ret[$row['STUD_ID']][$row['SESS_DATE']] = ($row['ATTND'])? 'Yes' : 'No';
             //$ret[$row['STUD_ID']] += [ $row['SESS_ID'] => ($row['ATTND']) ? 'Yes' : 'No'];
               //array_push($ret[$row['STUD_ID']], ['Att' . $row['SESS_ID'] => ($row['ATTND'])? 'Yes' : 'No']);
           }
