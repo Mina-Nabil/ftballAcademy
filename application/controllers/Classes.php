@@ -26,7 +26,7 @@
     }
 
     public function getSessionsForAttendance($classID){
-      echo json_encode($this->Sessions_model->getSessionsForAttendance(array_values($classID)), JSON_UNESCAPED_UNICODE);
+      echo json_encode(array_values($this->Sessions_model->getSessionsForAttendance($classID)), JSON_UNESCAPED_UNICODE);
     }
 
     public function getAttendance($classID){
