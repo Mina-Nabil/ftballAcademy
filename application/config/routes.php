@@ -98,6 +98,10 @@ $route['Api/getattendancelist/(:num)'] = 'Sessions/getAttendanceList/$1';
 $route['Api/setattendancetrue/(:num)/(:num)'] = 'Sessions/TakeAttendancefromTable/$1/$2';
 $route['Api/setattendancefalse/(:num)/(:num)'] = 'Sessions/CancelAttendancefromTable/$1/$2';
 
+//Payments URL
+$route['Api/getClassPayments/(:num)'] = 'Payments/getPaymentsByClass/$1';
+$route['Api/getStudentsPayments/(:num)'] = 'Payments/getStudentPaymentHistory/$1';
+
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
