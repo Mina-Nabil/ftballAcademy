@@ -43,7 +43,7 @@ class Payments_model extends CI_Model{
         public function insertPayments($studentID, $paymentName, $Amount){
             //NN Text ArabicName Name DistrictID
           $strSQL = "INSERT INTO Payments (PYMT_STUD, PYMT_NAME, PYMT_AMNT, PYMT_DATE)
-                     VALUES (?, ?, NOW())";
+                     VALUES (?, ?, ?, NOW())";
           $query = $this->db->query($strSQL, array($studentID, $paymentName, $Amount));
 
         }
