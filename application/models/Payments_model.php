@@ -49,12 +49,11 @@ class Payments_model extends CI_Model{
         }
 
         public function payPayments($ID){
-            //NN Text ArabicName Name DistrictID
           $strSQL = "UPDATE Payments
                     SET PYMT_PAID = 1
                     WHERE
                         `PYMT_ID`= ?";
-          $query = $this->db->query($strSQL, array($ID));
+          return $this->db->query($strSQL, array($ID));
 
         }
 
