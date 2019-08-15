@@ -58,7 +58,7 @@ class Payments_model extends CI_Model{
         }
 
 
-        public function getSubsciptionAmount(){
+        public function getSubscriptionAmount(){
           $strSQL = "SELECT STTNG_SUB_AMNT FROM settings";
           $query = $this->db->query($strSQL);
           return $query->result_array()[0]['STTNG_SUB_AMNT'];

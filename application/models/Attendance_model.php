@@ -37,7 +37,7 @@ class Attendance_model extends CI_Model{
 
             $this->editAttendance($Session['class']['SESS_ID'], $Session['class']['STUD_ID'],1, $Date->format('Y-m-d H:i:s'), $Dur1->format('%H:%i:%s'));
             if($this->Payments_model->getPaymentCountThisMonth($Session['class']['STUD_ID']) == 0){
-              $this->Payments_model->insertPayments($Session['class']['STUD_ID'], date('FY'));
+              $this->Payments_model->insertPayments($Session['class']['STUD_ID'], date('FY'), $this->Payments_model->getSubscriptionAmount());
             }
             return array('result' => 1);
           }

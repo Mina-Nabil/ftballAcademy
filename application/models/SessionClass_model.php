@@ -30,7 +30,8 @@ class SessionClass_model extends CI_Model{
                            SSCL_SESS_ID = SESS_ID
                       AND  SESS_USER_ID = USER_ID
                       AND  SSCL_CLSS_ID = CLSS_ID
-                      AND  SSCL_CLSS_ID = {$ID}";
+                      AND  SSCL_CLSS_ID = {$ID}
+                      ORDER BY SESS_ID DESC ";
           $query = $this->db->query($strSQL);
           return $query->result_array();
 
