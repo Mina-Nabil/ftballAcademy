@@ -11,7 +11,7 @@ class Payments_model extends CI_Model{
 
         public function getPendingPayments($classID){
 
-          $strSQL = "SELECT PYMT_ID, PYMT_NAME, PYMT_STUD, PYMT_DATE, PYMT_PAID, STUD_NAME
+          $strSQL = "SELECT PYMT_ID, PYMT_NAME, PYMT_STUD, PYMT_DATE, PYMT_PAID, PYMT_AMNT, STUD_NAME
                       FROM  Payments, students
                       WHERE STUD_CLSS_ID = ? AND PYMT_PAID = 0 ";
           $query = $this->db->query($strSQL, array($classID));
@@ -30,7 +30,7 @@ class Payments_model extends CI_Model{
 
         public function getStudentPayments($studentID){
 
-          $strSQL = "SELECT PYMT_ID, PYMT_NAME, PYMT_STUD, PYMT_DATE, PYMT_PAID, STUD_NAME
+          $strSQL = "SELECT PYMT_ID, PYMT_NAME, PYMT_STUD, PYMT_DATE, PYMT_PAID, PYMT_AMNT, STUD_NAME
                       FROM  Payments, students
                       WHERE PYMT_STUD = ?
                       LIMIT 100 ORDER BY PYMT_ID DESC";
