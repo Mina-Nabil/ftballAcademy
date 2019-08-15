@@ -13,7 +13,7 @@ class Payments_model extends CI_Model{
 
           $strSQL = "SELECT PYMT_ID, PYMT_NAME, PYMT_STUD, PYMT_DATE, PYMT_PAID, PYMT_AMNT, STUD_NAME
                       FROM  Payments, students
-                      WHERE STUD_CLSS_ID = ? AND PYMT_PAID = 0 ";
+                      WHERE PYMT_STUD = STUD_ID AND STUD_CLSS_ID = ? AND PYMT_PAID = 0 ";
           $query = $this->db->query($strSQL, array($classID));
           return $query->result_array();
 
@@ -32,7 +32,7 @@ class Payments_model extends CI_Model{
 
           $strSQL = "SELECT PYMT_ID, PYMT_NAME, PYMT_STUD, PYMT_DATE, PYMT_PAID, PYMT_AMNT, STUD_NAME
                       FROM  Payments, students
-                      WHERE PYMT_STUD = ?
+                      WHERE PYMT_STUD=STUD_ID AND PYMT_STUD = ?
                       LIMIT 100 ORDER BY PYMT_ID DESC";
           $query = $this->db->query($strSQL, array($studentID));
           return $query->result_array();
