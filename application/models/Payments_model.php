@@ -22,9 +22,9 @@ class Payments_model extends CI_Model{
         public function getPaymentCountThisMonth($studentID){
           $strSQL = "SELECT COUNT(*) as kam
                       FROM Payments
-                      WHERE PYMT_STUD = ? AND MONTH(PYMT_DATE) = MONTH(NOW()) AND YEAR(PYMT_DATE) = YEAR(NOW) ";
+                      WHERE PYMT_STUD = ? AND MONTH(PYMT_DATE) = MONTH(NOW()) AND YEAR(PYMT_DATE) = YEAR(NOW()) ";
 
-          $query = $this->db->query($strSQL, array($classID));
+          $query = $this->db->query($strSQL, array($studentID));
           return $query->result_array()[0]['kam'];
         }
 
