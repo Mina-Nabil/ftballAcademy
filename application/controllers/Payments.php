@@ -21,6 +21,10 @@
       echo json_encode($this->Payments_model->getPendingPayments($classID), JSON_UNESCAPED_UNICODE);
     }
 
+    public function payPayment($paymentID){
+      echo json_encode($this->Payments_model->payPayments($paymentID), JSON_UNESCAPED_UNICODE);
+    }
+
     public function insertPayment(){
       $data = json_decode(file_get_contents('php://input'), true);
 
