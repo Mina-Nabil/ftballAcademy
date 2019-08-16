@@ -15,7 +15,8 @@ class Students_model extends CI_Model{
                             STUD_PRNT_NAME, STUD_MNTR_NAME, STUD_PREV_CLUB, STUD_FAV_POS,STUD_WGHT, STUD_LGTH, POST_NAME, POST_ABB, STUD_BARCODE, STUD_SINCE, STUD_ACCS_CODE, CLSS_NME as STUD_CLSS_NME
                       FROM students,  positions, classes
                       WHERE   STUD_FAV_POS = POST_ID
-                      AND     STUD_CLSS_ID = CLSS_ID";
+                      AND     STUD_CLSS_ID = CLSS_ID
+                      ORDER BY STUD_NAME ASC ";
           $query = $this->db->query($strSQL);
           return $query->result_array();
 
@@ -105,7 +106,7 @@ class Students_model extends CI_Model{
         }
 
         public function getUnsubscribers(){
-          $strSQL   =  "SELECT period_diff(date_format(now(), '%Y%m') - STUD_PAID, date_format(STUD_SINCE, '%Y%m')) as Months , STUD_NAME, STUD_CSID, STUD_ID 
+          $strSQL   =  "SELECT period_diff(date_format(now(), '%Y%m') - STUD_PAID, date_format(STUD_SINCE, '%Y%m')) as Months , STUD_NAME, STUD_CSID, STUD_ID
                         FROM students
                         WHERE period_diff(date_format(now(), '%Y%m'), date_format(STUD_SINCE, '%Y%m')) > STUD_PAID
                         AND STUD_ACTV = 1";

@@ -32,10 +32,25 @@
       $Amount  = $data['PYMT_AMNT'];
       $Date  = date("Y-m-d");
 
-      $paymentTO = $data['PYMT_STUD'];
+      $Student = $data['PYMT_STUD'];
+      $Class = $data['PYMT_CLSS'];
 
-      if($Name !== null && $BirthD !==null && $ParentTel!==null)
-      echo json_encode($this->Students_model->insertPayments($studentID, $Name, $Amount), JSON_UNESCAPED_UNICODE);
+      if($Student == 0 && $Class == 0) die("Invalid Request");
+
+      else if ($Student == 0) //Generate Payment for a class
+      {
+        $students = $this->Students_model->getStudent_byClass($Class);
+        foreach($students as $taleb){
+          $this->Payments_model->insertPayments($taleb['STUD_ID'], $Name, $Amount);
+        }
+        echo json_encode(array("result"=>1), JSON_UNESCAPED_UNICODE);
+      }
+
+      else if ($Class==0) //Generate Payment for one student
+      {
+        $this->Payments_model->insertPayments($Student, $Name, $Amount);
+        echo json_encode(array("result"=>1), JSON_UNESCAPED_UNICODE);
+      }
       else
       die("Invalid Arguments");
     }
