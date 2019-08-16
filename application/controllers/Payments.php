@@ -29,6 +29,19 @@
       echo json_encode($this->Payments_model->getSettings(), JSON_UNESCAPED_UNICODE);
     }
 
+    public function setSettings(){
+      $data = json_decode(file_get_contents('php://input'), true);
+
+      $Amount = $data['STTNG_SUB_AMNT'];
+
+      if(isset($Amount) && is_numeric($Amount)){
+        $this->Payments_model->editSubAmount($Amount);
+        echo json_encode(array("result"=>1), JSON_UNESCAPED_UNICODE);
+      }
+      else
+        die("Invalid Arguments");
+    }
+
     public function insertPayment(){
       $data = json_decode(file_get_contents('php://input'), true);
 
