@@ -24,6 +24,20 @@ class Attendance_model extends CI_Model{
 
         }
 
+        public function getAttendance_byStudent($ID){
+
+          $strSQL = "SELECT sessions.SESS_ID, students.STUD_ID, classes.CLSS_ID, ATTND, SESS_DESC, CLSS_NME, CLSS_YEAR, STUD_NAME, ATTND_TIME, ATTND_DUR, sessions.SESS_STRT_DATE, sessions.SESS_DESC 
+                    FROM attendance, students, classes, sessions
+                    WHERE
+                        attendance.CLSS_ID = classes.CLSS_ID
+                    AND attendance.SESS_ID = sessions.SESS_ID
+                    AND attendance.STUD_ID = students.STUD_ID
+                    AND attendance.STUD_ID = {$ID}";
+          $query = $this->db->query($strSQL);
+          return $query->result_array();
+
+        }
+
         public function takeattendance($StudentBarcode){
           $Date = new DateTime("now", new DateTimeZone('Africa/Cairo'));
           $Session = $this->getCurrentSession($StudentBarcode);
