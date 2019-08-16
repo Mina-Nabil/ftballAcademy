@@ -102,7 +102,7 @@ $route['Api/setattendancefalse/(:num)/(:num)'] = 'Sessions/CancelAttendancefromT
 $route['Api/getClassPayments/(:num)'] = 'Payments/getPaymentsByClass/$1';
 $route['Api/payPayment/(:num)'] = 'Payments/payPayment/$1';
 $route['Api/getStudentsPayments/(:num)'] = 'Payments/getStudentPaymentHistory/$1';
-$route['Api/paymentObj'] = 'Payments/insertPayment';
+$route['Api/insertPayment'] = 'Payments/insertPayment';
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
