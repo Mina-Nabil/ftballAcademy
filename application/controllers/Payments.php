@@ -18,7 +18,7 @@
     }
 
     public function getStudentPaymentHistory($studentID){
-      echo json_encode($this->Payments_model->getPendingPayments($classID), JSON_UNESCAPED_UNICODE);
+      echo json_encode($this->Payments_model->getStudentPayments($studentID), JSON_UNESCAPED_UNICODE);
     }
 
     public function payPayment($paymentID){
