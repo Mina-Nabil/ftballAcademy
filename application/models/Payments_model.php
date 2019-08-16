@@ -33,7 +33,8 @@ class Payments_model extends CI_Model{
           $strSQL = "SELECT PYMT_ID, PYMT_NAME, PYMT_STUD, PYMT_DATE, PYMT_PAID, PYMT_AMNT, STUD_NAME
                       FROM  Payments, students
                       WHERE PYMT_STUD=STUD_ID AND PYMT_STUD = ?
-                      LIMIT 100 ORDER BY PYMT_ID DESC";
+                      ORDER BY PYMT_ID DESC 
+                      LIMIT 100 ";
           $query = $this->db->query($strSQL, array($studentID));
           return $query->result_array();
 
