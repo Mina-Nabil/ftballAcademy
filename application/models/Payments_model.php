@@ -64,6 +64,12 @@ class Payments_model extends CI_Model{
           return $query->result_array()[0]['STTNG_SUB_AMNT'];
         }
 
+        public function getSettings(){
+          $strSQL = "SELECT STTNG_SUB_AMNT FROM settings";
+          $query = $this->db->query($strSQL);
+          return $query->result_array()[0];
+        }
+
         public function editSubAmount($newAmount){
           if(is_numeric($newAmount)){
             $strSQL = "UPDATE Settings SET STTNG_SUB_AMNT = ? ";

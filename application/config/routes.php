@@ -104,6 +104,10 @@ $route['Api/payPayment/(:num)'] = 'Payments/payPayment/$1';
 $route['Api/getStudentsPayments/(:num)'] = 'Payments/getStudentPaymentHistory/$1';
 $route['Api/insertPayment'] = 'Payments/insertPayment';
 
+//settings URLs
+$route['Api/getsettings'] = 'Payments/getSettings';
+$route['Api/setsettings'] = 'Payments/setSettings';
+
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

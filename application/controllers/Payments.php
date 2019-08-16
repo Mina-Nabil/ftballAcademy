@@ -25,6 +25,10 @@
       echo json_encode($this->Payments_model->payPayments($paymentID), JSON_UNESCAPED_UNICODE);
     }
 
+    public function getSettings(){
+      echo json_encode($this->Payments_model->getSettings(), JSON_UNESCAPED_UNICODE);
+    }
+
     public function insertPayment(){
       $data = json_decode(file_get_contents('php://input'), true);
 
