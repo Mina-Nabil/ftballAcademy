@@ -6,7 +6,7 @@
     public function __construct()
     {
       header('Access-Control-Allow-Origin: *');
-      header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+      header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Cache-Control: no-transform");
       header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
       parent::__construct();
 
@@ -44,7 +44,7 @@
     }
 
     public function deactivatePlayer($StudentID){
-      echo json_encode($this->Students_model->deactivateStudent($StudentID), JSON_UNESCAPED_UNICODE);      
+      echo json_encode($this->Students_model->deactivateStudent($StudentID), JSON_UNESCAPED_UNICODE);
     }
 
     public function addStudent($key=''){
